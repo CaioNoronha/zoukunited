@@ -1,8 +1,8 @@
 const navbar = {
+    classes: "Classes",
     events: "Events",
-    competitions: "Competitions",
-    rules: "Rules",
-    educational: "Educational"
+    about: "About Us",
+    login: "Login"
 }
 
 export default navbar;
