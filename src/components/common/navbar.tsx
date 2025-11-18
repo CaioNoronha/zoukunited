@@ -42,8 +42,8 @@ export default function NavBar() {
         <div className="flex-shrink-0">
           <Link href="/">
             <Image
-              src="/icons/bzdc_logo_horizontal.png"
-              alt="BZDC Logo"
+              src="/icons/zoukunited_logo.png"
+              alt="Zouk United"
               width={120}
               height={40}
               priority
