@@ -12,7 +12,7 @@ export default function LocationSection() {
       </div>
       <div className="relative mx-auto flex min-h-[380px] w-full max-w-6xl flex-col justify-between py-10 text-white sm:min-h-[440px] lg:min-h-[520px]">
         <div className="max-w-sm space-y-4">
-          <p className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA] after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-14 after:bg-[#F39200]">
+          <p className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-10 after:bg-[#F39200]">
             Location
           </p>
           <h3 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">

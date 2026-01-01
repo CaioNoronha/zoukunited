@@ -31,7 +31,7 @@ export default function TicketsSection() {
     <section className="bg-neutral-950 px-6 pb-24 pt-10 lg:min-h-[534px]">
       <div className="mx-auto max-w-6xl space-y-8">
         <div className="space-y-2">
-          <p className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA] after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-14 after:bg-[#F39200]">
+          <p className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-10 after:bg-[#F39200]">
             Tickets
           </p>
         </div>
