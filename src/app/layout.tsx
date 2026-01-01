@@ -13,6 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <NavBar />
             <ScrollToTopOnMount />
             <main className="flex-1">{children}</main>
+            <Footer />
           </div>
         </Providers>
       </body>
