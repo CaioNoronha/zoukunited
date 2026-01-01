@@ -58,7 +58,7 @@ export function HorizontalCarousel({
       </Carousel>
       {children && (
         <div className="pointer-events-none absolute inset-0 z-10">
-          <div className="mx-auto flex h-full max-w-6xl items-end px-6 pb-20 pt-28 lg:items-center lg:pt-32">
+          <div className="mx-auto flex h-full w-full max-w-6xl items-end px-6 pb-20 pt-28 lg:items-center lg:px-0 lg:pt-32">
             <div className="pointer-events-auto">{children}</div>
           </div>
         </div>
