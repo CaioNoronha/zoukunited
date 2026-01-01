@@ -34,17 +34,11 @@ export default function TicketsSection() {
           <p className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA] after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-14 after:bg-[#F39200]">
             Tickets
           </p>
-          <h2 className="text-3xl font-semibold sm:text-4xl">
-            Choose your pass
-          </h2>
         </div>
         <div className="grid auto-rows-fr gap-6 md:grid-cols-3">
           {tickets.map((ticket) => (
             <TicketCard key={ticket.title} {...ticket} />
           ))}
-        </div>
-        <div className="flex justify-center pt-4">
-          <CustomButton variant="secondary">Buy tickets</CustomButton>
         </div>
       </div>
     </section>
