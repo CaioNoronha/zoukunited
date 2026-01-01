@@ -1,38 +1,53 @@
 type TicketCardProps = {
   price: string;
   title: string;
+  availability: string;
   description: string;
-  perks: string[];
   tag?: string;
 };
 
 export default function TicketCard({
   price,
   title,
+  availability,
   description,
-  perks,
   tag,
 }: TicketCardProps) {
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-6">
-      <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--ds-secondary-1)]">
+    <div className="relative flex h-full min-h-[280px] w-full max-w-[360px] flex-col rounded-[14px] border border-white/10 bg-[#0d0d0f] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.02)_inset] lg:p-7">
+      {tag && (
+        <span className="absolute right-5 top-5 rounded-full border border-[#F39200]/30 bg-[#F39200]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#F39200]">
+          {tag}
+        </span>
+      )}
+      <div className="min-h-[88px] space-y-2">
+        <span className="text-[15px] font-semibold text-[#F39200]">
           {price}
         </span>
-        {tag && (
-          <span className="rounded-full border border-white/10 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-white/60">
-            {tag}
-          </span>
-        )}
+        <h3 className="min-h-[34px] text-[13px] font-semibold leading-snug text-white line-clamp-2">
+          {title}
+        </h3>
+        <p className="text-[10px] text-white/45">{availability}</p>
       </div>
-      <h3 className="mt-4 text-lg font-semibold">{title}</h3>
-      <p className="mt-2 text-sm text-white/65 line-clamp-3">{description}</p>
-      <div className="mt-4 flex-1 space-y-2 text-xs text-white/60">
-        {perks.map((perk) => (
-          <p key={perk} className="rounded-lg border border-white/5 bg-white/5 px-3 py-2">
-            {perk}
-          </p>
-        ))}
+      <div className="mt-5 border-t border-white/10 pt-4">
+        <div className="flex items-center justify-between text-[11px] font-medium text-[#FAFAFA]">
+          <span>Ticket details</span>
+          <button
+            type="button"
+            aria-label="Open ticket details"
+            className="flex items-center justify-center"
+          >
+            <img
+              src="/button.png"
+              alt=""
+              className="h-6 w-6"
+              aria-hidden="true"
+            />
+          </button>
+        </div>
+        <p className="mt-3 text-[11px] leading-relaxed text-white/45 line-clamp-2">
+          {description}
+        </p>
       </div>
     </div>
   );
