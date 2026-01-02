@@ -152,7 +152,9 @@ export function ImageCropDialog({
           <CustomButton
             variant="secondary"
             className="bg-[var(--ds-primary-2)] hover:bg-[var(--ds-primary-1)] text-white rounded-full"
-            onClick={handleSave}
+            onClick={() => {
+              void handleSave()
+            }}
           >
             Aplicar corte
           </CustomButton>

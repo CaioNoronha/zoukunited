@@ -44,10 +44,12 @@ export function BackButton({
         "transition-all duration-200 flex items-center gap-2",
         className
       )}
-      aria-label={label ?? t.backButton.title}
+      aria-label="Back"
     >
       <ArrowLeft className="w-5 h-5" />
-      <span className="text-sm font-semibold">{label ?? t.backButton.title}</span>
+      <span className="text-sm font-semibold">
+        Back
+      </span>
     </button>
   );
 }

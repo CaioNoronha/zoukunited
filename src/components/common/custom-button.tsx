@@ -1,14 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-interface CustomButtonProps {
+interface CustomButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   children: React.ReactNode;
   icon?: React.ReactNode;
   variant?: "primary" | "secondary" | "dark" | "neutral" | "danger";
   fullWidth?: boolean;
-  onClick?: () => void;
-  type?: "button" | "submit" | "reset";
-  disabled?: boolean;
 }
 
 const variantClasses = {
@@ -29,13 +26,13 @@ export function CustomButton({
   icon,
   variant = "secondary",
   fullWidth,
-  onClick,
+  className,
   type = "button",
   disabled = false,
+  ...props
 }: CustomButtonProps) {
   return (
     <Button
-      onClick={onClick}
       type={type}
       disabled={disabled}
       className={cn(
@@ -43,8 +40,10 @@ export function CustomButton({
         variantClasses[variant],
         fullWidth && "w-full",
         "font-sans",
+        className,
         disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
       )}
+      {...props}
     >
       {icon && (
         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg leading-none">
