@@ -14,7 +14,10 @@ export default function TicketCard({
   tag,
 }: TicketCardProps) {
   return (
-    <div className="relative flex h-full min-h-[280px] w-full max-w-[360px] flex-col rounded-[14px] border border-white/10 bg-[#0d0d0f] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.02)_inset] lg:p-7">
+    <a
+      href="https://www.danceplace.com/book/it/15077"
+      className="relative flex h-full min-h-[280px] w-full max-w-[360px] flex-col rounded-[14px] border border-white/10 bg-[#0d0d0f] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.02)_inset] transition hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F39200]/70 lg:p-7"
+    >
       {tag && (
         <span className="absolute right-5 top-5 rounded-full border border-[#F39200]/30 bg-[#F39200]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#F39200]">
           {tag}
@@ -32,23 +35,19 @@ export default function TicketCard({
       <div className="mt-5 border-t border-white/10 pt-4">
         <div className="flex items-center justify-between text-[11px] font-medium text-[#FAFAFA]">
           <span>Ticket details</span>
-          <button
-            type="button"
-            aria-label="Open ticket details"
-            className="flex items-center justify-center"
-          >
+          <span className="flex items-center justify-center" aria-hidden="true">
             <img
               src="/button.png"
               alt=""
               className="h-6 w-6"
               aria-hidden="true"
             />
-          </button>
+          </span>
         </div>
         <p className="mt-3 text-[11px] leading-relaxed text-white/45 line-clamp-2">
           {description}
         </p>
       </div>
-    </div>
+    </a>
   );
 }
