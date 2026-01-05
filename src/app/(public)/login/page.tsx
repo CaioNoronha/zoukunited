@@ -12,11 +12,11 @@ const montserrat = Montserrat({
 export default function LoginPage() {
   return (
     <div
-      className={`${montserrat.className} relative isolate min-h-full w-full bg-[#0a0a0a] px-6 pb-16 pt-28 text-white`}
+      className={`${montserrat.className} relative isolate min-h-full w-full bg-[#0a0a0a] px-6 pb-6 pt-24 text-white`}
     >
 
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
-        <div className="fade-up w-full max-w-md rounded-[18px] border border-white/10 bg-transparent p-6 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+        <div className="fade-up mt-16 w-full max-w-lg rounded-[18px] border border-white/10 bg-transparent p-8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
           <div className="rounded-md border border-white/10 bg-[#24262b] p-1">
             <div className="grid grid-cols-2 gap-1 rounded-[6px] bg-[#2b2d33] p-1 text-xs font-semibold uppercase tracking-[0.2em]">
               <button
