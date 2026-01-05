@@ -43,7 +43,7 @@ export default function SignUpPage() {
           <form className="mt-6 space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FAFAFA]">
+                <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
                   First Name
                 </label>
                 <input
@@ -53,7 +53,7 @@ export default function SignUpPage() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FAFAFA]">
+                <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
                   Last Name
                 </label>
                 <input
@@ -65,7 +65,7 @@ export default function SignUpPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FAFAFA]">
+              <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
                 Email
               </label>
               <input
@@ -77,7 +77,7 @@ export default function SignUpPage() {
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FAFAFA]">
+                <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
                   City
                 </label>
                 <div className="relative">
@@ -92,7 +92,7 @@ export default function SignUpPage() {
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FAFAFA]">
+                <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
                   Phone number
                 </label>
                 <input
@@ -105,7 +105,7 @@ export default function SignUpPage() {
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FAFAFA]">
+                <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
                   Password
                 </label>
                 <input
@@ -115,7 +115,7 @@ export default function SignUpPage() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FAFAFA]">
+                <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
                   Confirm password
                 </label>
                 <input

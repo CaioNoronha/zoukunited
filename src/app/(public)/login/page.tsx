@@ -43,7 +43,7 @@ export default function LoginPage() {
 
           <form className="mt-6 space-y-4">
             <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FAFAFA]">
+              <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
                 Email
               </label>
               <input
@@ -53,7 +53,7 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FAFAFA]">
+              <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
                 Password
               </label>
               <input
