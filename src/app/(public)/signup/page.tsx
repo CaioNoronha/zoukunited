@@ -128,26 +128,26 @@ export default function SignUpPage() {
 
             <div className="space-y-2 text-xs text-white/70">
               <p className="flex items-center gap-2">
-                <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[10px] text-white/70">
-                  ✓
+                <span className="relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/30">
+                  <span className="h-1 w-1 rounded-full bg-white/60" />
                 </span>
                 Must be at least 6 characters long
               </p>
               <p className="flex items-center gap-2">
-                <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[10px] text-white/70">
-                  ✓
+                <span className="relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/30">
+                  <span className="h-1 w-1 rounded-full bg-white/60" />
                 </span>
                 Must include at least one uppercase letter
               </p>
               <p className="flex items-center gap-2">
-                <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[10px] text-white/70">
-                  ✓
+                <span className="relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/30">
+                  <span className="h-1 w-1 rounded-full bg-white/60" />
                 </span>
                 Must include at least one lowercase letter
               </p>
               <p className="flex items-center gap-2">
-                <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[10px] text-white/70">
-                  ✓
+                <span className="relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/30">
+                  <span className="h-1 w-1 rounded-full bg-white/60" />
                 </span>
                 Must include at least one number
               </p>
