@@ -21,7 +21,7 @@ export default function LoginPage() {
             <div className="grid grid-cols-2 gap-1 rounded-[6px] bg-[#2b2d33] p-1 text-xs font-semibold uppercase tracking-[0.2em]">
               <button
                 type="button"
-                className="rounded-[6px] bg-[#0f1013] px-4 py-2 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
+                className="rounded-[6px] bg-[#0a0a0a] px-4 py-2 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
               >
                 Log in
               </button>
@@ -49,7 +49,7 @@ export default function LoginPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="h-11 w-full rounded-md border border-white/15 bg-[#0f1013] px-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
+                className="h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] px-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
               />
             </div>
             <div className="space-y-2">
@@ -59,7 +59,7 @@ export default function LoginPage() {
               <input
                 type="password"
                 placeholder="Enter your password"
-                className="h-11 w-full rounded-md border border-white/15 bg-[#0f1013] px-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
+                className="h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] px-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
               />
             </div>
 
@@ -94,7 +94,7 @@ export default function LoginPage() {
 
             <button
               type="button"
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-white/15 bg-[#14161a] text-sm font-semibold text-white/85 transition hover:bg-[#1b1d22] hover:text-white"
+              className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-white/15 bg-[#0a0a0a] text-sm font-semibold text-white/85 transition hover:bg-[#0f0f0f] hover:text-white"
             >
               <svg
                 aria-hidden="true"
