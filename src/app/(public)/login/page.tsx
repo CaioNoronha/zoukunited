@@ -19,18 +19,18 @@ export default function LoginPage() {
         <div className="fade-up mt-16 w-full max-w-lg rounded-[18px] border border-white/10 bg-transparent px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
           <div className="rounded-md border border-white/10 bg-[#24262b] p-1">
             <div className="grid grid-cols-2 gap-1 rounded-[6px] bg-[#2b2d33] p-1 text-xs font-semibold uppercase tracking-[0.2em]">
-              <button
-                type="button"
-                className="rounded-[6px] bg-[#0a0a0a] px-4 py-2 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
+              <Link
+                href="/login"
+                className="rounded-[6px] bg-[#0a0a0a] px-4 py-2 text-center text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
               >
                 Log in
-              </button>
-              <button
-                type="button"
-                className="rounded-[6px] px-4 py-2 text-white/60 hover:text-white"
+              </Link>
+              <Link
+                href="/signup"
+                className="rounded-[6px] px-4 py-2 text-center text-white/60 hover:text-white"
               >
                 Sign up
-              </button>
+              </Link>
             </div>
           </div>
 
