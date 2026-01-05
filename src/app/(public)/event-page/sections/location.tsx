@@ -1,4 +1,10 @@
+"use client"
+
+import { useTranslation } from "@/hooks/useTranslation";
+
 export default function LocationSection() {
+  const { t } = useTranslation();
+
   return (
     <section className="relative overflow-hidden bg-neutral-950 px-6 py-14 lg:min-h-[500px]">
       <div className="absolute inset-0">
@@ -13,7 +19,7 @@ export default function LocationSection() {
       <div className="relative mx-auto flex min-h-[360px] w-full max-w-6xl flex-col justify-between py-9 text-white sm:min-h-[420px] lg:min-h-[500px]">
         <div className="max-w-sm space-y-4">
           <p className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-10 after:bg-[#F39200]">
-            Location
+            {t.festival.title.location}
           </p>
           <h3 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
             <span className="block">Holiday Inn</span>
@@ -27,7 +33,7 @@ export default function LocationSection() {
             4333 Collins Ave, Miami Beach, FL, United States, 33140
           </p>
           <button className="w-fit border-b border-white/40 pb-1 text-[20px] font-medium tracking-[0.18em] text-white/80 transition hover:border-white hover:text-white">
-            View on map
+            {t.festival.button.viewOnMap}
           </button>
         </div>
       </div>

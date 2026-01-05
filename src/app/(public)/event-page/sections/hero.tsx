@@ -1,7 +1,12 @@
+"use client"
+
 import { HorizontalCarousel } from "@/components/common/horizontal-carousel";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function HeroSection() {
+  const { t } = useTranslation();
+
   return (
     <HorizontalCarousel
       slides={[
@@ -19,7 +24,7 @@ export default function HeroSection() {
           Miami Beach Zouk Festival 2026
         </h1>
         <Button className="h-10 w-[220px] rounded-md bg-[#F39200] text-[12px] font-semibold uppercase tracking-[0.2em] text-black hover:bg-[#d97f00]">
-          Explore
+          {t.festival.button.explore}
         </Button>
       </div>
     </HorizontalCarousel>

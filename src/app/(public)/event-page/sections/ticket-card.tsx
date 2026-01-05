@@ -1,3 +1,7 @@
+"use client"
+
+import { useTranslation } from "@/hooks/useTranslation";
+
 type TicketCardProps = {
   price: string;
   title: string;
@@ -13,6 +17,8 @@ export default function TicketCard({
   description,
   tag,
 }: TicketCardProps) {
+  const { t } = useTranslation();
+
   return (
     <a
       href="https://www.danceplace.com/book/it/15077"
@@ -34,7 +40,7 @@ export default function TicketCard({
       </div>
       <div className="mt-5 border-t border-white/10 pt-4">
         <div className="flex items-center justify-between text-[11px] font-medium text-[#FAFAFA]">
-          <span>Ticket details</span>
+          <span>{t.festival.info.ticketDetails}</span>
           <span className="flex items-center justify-center" aria-hidden="true">
             <img
               src="/button.png"

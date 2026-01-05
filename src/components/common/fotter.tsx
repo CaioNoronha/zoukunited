@@ -1,8 +1,11 @@
 "use client";
 
 import { Facebook, Instagram } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="w-full bg-neutral-950">
       <div className="mx-auto w-full max-w-[2000px] px-6">
@@ -10,7 +13,7 @@ export default function Footer() {
       </div>
       <div className="mx-auto w-full max-w-[1600px] px-6 py-6 text-center">
         <div className="flex items-center justify-center gap-3 text-xs font-medium tracking-wide text-[#FAFAFA]">
-          Follow us on social media
+          {t.footer.follow}
           <span className="flex items-center gap-3">
             <a
               href="https://www.instagram.com/miamizoukfestival "
@@ -29,7 +32,7 @@ export default function Footer() {
           </span>
         </div>
         <p className="mt-2 text-xs font-medium tracking-wide text-[#FAFAFA]">
-          © 2025 Paulo & Luiza, Zouk United Dance Studio.
+          {t.footer.copyright}
         </p>
       </div>
     </footer>

@@ -32,10 +32,10 @@ export default function NavBar() {
   const { t } = useTranslation();
 
   const links = [
-    { label: "About us", href: "/about" },
-    { label: "Festivals", href: "/event-page" },
-    { label: "Classes", href: "/classes" },
-    { label: "Log in", href: "/login" },
+    { label: t.navbar.aboutus, href: "/about" },
+    { label: t.navbar.festivals, href: "/event-page" },
+    { label: t.navbar.classes, href: "/classes" },
+    { label: t.navbar.login, href: "/login" },
   ];
 
   React.useEffect(() => {

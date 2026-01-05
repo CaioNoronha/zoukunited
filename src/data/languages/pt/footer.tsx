@@ -1,7 +1,6 @@
 const footer = {
-    copyright: "© 2025 Brazilian Zouk Dance Council. Todos os direitos reservados.",
-    language: "Escolha um idioma",
-    languageDescription: "Selecione o idioma que você prefere usar.",
+    follow: "Nos siga nas redes sociais",
+    copyright: "© 2025 Paulo & Luiza, Zouk United Dance Studio."
 }
 
 export default footer;
