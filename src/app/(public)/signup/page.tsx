@@ -17,7 +17,7 @@ export default function SignUpPage() {
       <div className="mx-auto flex w-full max-w-5xl items-center justify-center">
         <div className="fade-up mt-16 w-full max-w-xl rounded-[18px] border border-white/10 bg-transparent px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
           <div className="rounded-md border border-white/10 bg-[#24262b] p-1">
-            <div className="grid grid-cols-2 gap-1 rounded-[6px] bg-[#2b2d33] p-1 text-xs font-semibold uppercase tracking-[0.2em]">
+            <div className="grid grid-cols-2 gap-1 rounded-[6px] bg-[#2b2d33] p-1 text-xs font-semibold tracking-[0.12em]">
               <Link
                 href="/login"
                 className="rounded-[6px] px-4 py-2 text-center text-white/60 hover:text-white"
