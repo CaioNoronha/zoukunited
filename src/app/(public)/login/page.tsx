@@ -16,7 +16,7 @@ export default function LoginPage() {
     >
 
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
-        <div className="fade-up mt-16 w-full max-w-lg rounded-[18px] border border-white/10 bg-transparent p-8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+        <div className="fade-up mt-16 w-full max-w-lg rounded-[18px] border border-white/10 bg-transparent px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
           <div className="rounded-md border border-white/10 bg-[#24262b] p-1">
             <div className="grid grid-cols-2 gap-1 rounded-[6px] bg-[#2b2d33] p-1 text-xs font-semibold uppercase tracking-[0.2em]">
               <button
@@ -43,7 +43,7 @@ export default function LoginPage() {
 
           <form className="mt-6 space-y-4">
             <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
+              <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FAFAFA]">
                 Email
               </label>
               <input
@@ -53,7 +53,7 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
+              <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FAFAFA]">
                 Password
               </label>
               <input
@@ -63,11 +63,11 @@ export default function LoginPage() {
               />
             </div>
 
-            <div className="flex items-center justify-between text-xs text-white/60">
+            <div className="flex items-center justify-between text-xs text-[#FAFAFA]">
               <label className="flex items-center gap-2">
                 <input
                   type="checkbox"
-                  className="h-4 w-4 rounded border border-white/30 bg-transparent accent-[#f29b0f]"
+                  className="h-4 w-4 appearance-none rounded-[3px] border border-[#f29b0f] bg-transparent checked:bg-[#f29b0f] checked:border-[#f29b0f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f29b0f]/40"
                 />
                 Remember me
               </label>
