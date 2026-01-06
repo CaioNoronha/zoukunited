@@ -1,8 +1,106 @@
 "use client"
 
+import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+
+import { useAuth } from "@/hooks/useAuth";
+import { signUpWithEmail } from "@/services/auth";
+import { saveUserProfile } from "@/services/user-profile";
+import { getFirebaseLoginMessage } from "@/lib/login-errors";
 
 export function SignInForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
+  const { user } = useAuth();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [city, setCity] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [hasValidationError, setHasValidationError] = useState(false);
+  const showError = Boolean(error || hasValidationError);
+
+  const resolveAuthError = (message: string) =>
+    message.startsWith("auth/")
+      ? getFirebaseLoginMessage(message)
+      : message;
+
+  useEffect(() => {
+    if (user) {
+      router.replace(redirect ?? "/home");
+    }
+  }, [redirect, router, user]);
+
+  const handleSignUp = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+
+    if (!firstName || !lastName || !city || !phone || !email || !password) {
+      setHasValidationError(true);
+      setError("Please fill in all required fields.");
+      return;
+    }
+
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(email)) {
+      setHasValidationError(true);
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setHasValidationError(true);
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setHasValidationError(true);
+      setError("Passwords do not match.");
+      return;
+    }
+
+    setHasValidationError(false);
+    setLoading(true);
+    const { error: signUpError } = await signUpWithEmail(email.trim(), password);
+
+    if (signUpError) {
+      setLoading(false);
+      setError(resolveAuthError(signUpError));
+      setHasValidationError(true);
+      return;
+    }
+
+    try {
+      await saveUserProfile({
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        phone: phone.trim(),
+        city: city.trim(),
+        country: "",
+        categories: [],
+      });
+    } catch (profileError) {
+      setLoading(false);
+      setHasValidationError(true);
+      setError(
+        profileError instanceof Error
+          ? profileError.message
+          : "Could not save your profile."
+      );
+      return;
+    }
+
+    setLoading(false);
+    router.replace(redirect ?? "/home");
+  };
+
   return (
     <>
       <div className="mx-auto flex w-full max-w-5xl items-center justify-center">
@@ -31,7 +129,7 @@ export function SignInForm() {
             </p>
           </div>
 
-          <form className="mt-6 space-y-4">
+          <form className="mt-6 space-y-4" onSubmit={handleSignUp} noValidate>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
@@ -40,6 +138,10 @@ export function SignInForm() {
                 <input
                   type="text"
                   placeholder="Enter your first name"
+                  value={firstName}
+                  onChange={(event) => setFirstName(event.target.value)}
+                  aria-invalid={showError}
+                  disabled={loading}
                   className="h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] px-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
                 />
               </div>
@@ -50,6 +152,10 @@ export function SignInForm() {
                 <input
                   type="text"
                   placeholder="Enter your last name"
+                  value={lastName}
+                  onChange={(event) => setLastName(event.target.value)}
+                  aria-invalid={showError}
+                  disabled={loading}
                   className="h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] px-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
                 />
               </div>
@@ -62,6 +168,10 @@ export function SignInForm() {
               <input
                 type="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                aria-invalid={showError}
+                disabled={loading}
                 className="h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] px-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
               />
             </div>
@@ -75,6 +185,10 @@ export function SignInForm() {
                   <input
                     type="text"
                     placeholder="Select your city"
+                    value={city}
+                    onChange={(event) => setCity(event.target.value)}
+                    aria-invalid={showError}
+                    disabled={loading}
                     className="h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] px-3 pr-9 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
                   />
                   <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/60">
@@ -89,6 +203,10 @@ export function SignInForm() {
                 <input
                   type="tel"
                   placeholder="Enter your phone number"
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
+                  aria-invalid={showError}
+                  disabled={loading}
                   className="h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] px-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
                 />
               </div>
@@ -102,6 +220,10 @@ export function SignInForm() {
                 <input
                   type="password"
                   placeholder="Enter your password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  aria-invalid={showError}
+                  disabled={loading}
                   className="h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] px-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
                 />
               </div>
@@ -112,6 +234,10 @@ export function SignInForm() {
                 <input
                   type="password"
                   placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(event) => setConfirmPassword(event.target.value)}
+                  aria-invalid={showError}
+                  disabled={loading}
                   className="h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] px-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
                 />
               </div>
@@ -144,11 +270,18 @@ export function SignInForm() {
               </p>
             </div>
 
+            {showError ? (
+              <p className="text-sm text-[#ffb357]" role="alert">
+                {error}
+              </p>
+            ) : null}
+
             <button
               type="submit"
-              className="h-11 w-full rounded-md bg-[#f29b0f] text-sm font-semibold text-black shadow-[0_10px_30px_rgba(242,155,15,0.35)] transition hover:bg-[#ffb357]"
+              disabled={loading}
+              className="h-11 w-full rounded-md bg-[#f29b0f] text-sm font-semibold text-black shadow-[0_10px_30px_rgba(242,155,15,0.35)] transition hover:bg-[#ffb357] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              Create account
+              {loading ? "Creating account..." : "Create account"}
             </button>
 
             <p className="text-xs text-white/60">

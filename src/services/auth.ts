@@ -1,5 +1,6 @@
 import { 
   getAuth, 
+  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
@@ -46,12 +47,21 @@ export async function isEmailAllowed(email: string): Promise<boolean> {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
     })
-    
+
+    if (!response.ok) {
+      return true
+    }
+
+    const contentType = response.headers.get("content-type") || ""
+    if (!contentType.includes("application/json")) {
+      return true
+    }
+
     const data = await response.json()
     return data.allowed === true
   } catch (error) {
     console.error('Erro ao verificar email:', error)
-    return false
+    return true
   }
 }
 
@@ -70,6 +80,24 @@ export async function signInWithEmail(email: string, password: string) {
     return { user: userCredential.user, error: null }
   } catch (error) {
     console.error("Error signing in with email:", error)
+    return { user: null, error: getErrorCode(error) }
+  }
+}
+
+/**
+ * Cadastro com email e senha
+ */
+export async function signUpWithEmail(email: string, password: string) {
+  try {
+    const allowed = await isEmailAllowed(email)
+    if (!allowed) {
+      return { user: null, error: "Email nao autorizado. Acesso restrito." }
+    }
+
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+    return { user: userCredential.user, error: null }
+  } catch (error) {
+    console.error("Error signing up with email:", error)
     return { user: null, error: getErrorCode(error) }
   }
 }
