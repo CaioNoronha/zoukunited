@@ -1,4 +1,4 @@
-import { updateProfile } from "firebase/auth"
+import { type User, updateProfile } from "firebase/auth"
 import {
   collection,
   deleteDoc,
@@ -47,6 +47,35 @@ export async function fetchUserProfile(uid: string): Promise<UserProfileData | n
     displayName: data.displayName,
     email: data.email,
   }
+}
+
+export async function ensureUserProfile(user: User) {
+  const userRef = doc(db, "users", user.uid)
+  const userDoc = await getDoc(userRef)
+
+  if (userDoc.exists()) return
+
+  const displayName = user.displayName || ""
+  const [firstName, ...rest] = displayName.split(" ").filter(Boolean)
+  const lastName = rest.join(" ").trim()
+
+  await setDoc(
+    userRef,
+    {
+      firstName: firstName || "",
+      lastName,
+      city: "",
+      country: "",
+      phone: "",
+      categories: [],
+      photoURL: user.photoURL ?? null,
+      displayName,
+      email: user.email ?? null,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true }
+  )
 }
 
 export async function saveUserProfile(input: {

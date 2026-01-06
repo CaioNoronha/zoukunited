@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { useAuth } from "@/hooks/useAuth";
 import { signInWithEmail, signInWithGoogle } from "@/services/auth";
+import { ensureUserProfile } from "@/services/user-profile";
 import {
   getFirebaseLoginMessage,
   getValidationMessage,
@@ -73,12 +74,20 @@ export function LoginForm() {
     setError(null);
     setHasValidationError(false);
     setLoading(true);
-    const { error: signInError } = await signInWithGoogle();
+    const { error: signInError, user: signedInUser } = await signInWithGoogle();
     setLoading(false);
 
     if (signInError) {
       setError(resolveAuthError(signInError));
       return;
+    }
+
+    if (signedInUser) {
+      try {
+        await ensureUserProfile(signedInUser);
+      } catch (profileError) {
+        console.error("Could not create user profile:", profileError);
+      }
     }
 
     router.replace(redirect ?? "/home");
