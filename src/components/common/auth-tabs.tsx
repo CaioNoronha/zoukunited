@@ -41,13 +41,13 @@ export function AuthTabs({
         <TabsList className="grid h-auto w-full grid-cols-2 gap-1 rounded-[6px] bg-transparent p-1 text-xs font-semibold tracking-[0.12em] text-white/60">
           <TabsTrigger
             value="login"
-            className="rounded-[6px] px-4 py-2 text-center transition-all duration-300 ease-out data-[state=active]:bg-[#0a0a0a] data-[state=active]:text-white data-[state=active]:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
+            className="rounded-[6px] px-4 py-2 text-center transition-all duration-300 ease-out data-[state=active]:bg-[#0a0a0a] data-[state=active]:text-white"
           >
             {loginLabel}
           </TabsTrigger>
           <TabsTrigger
             value="signup"
-            className="rounded-[6px] px-4 py-2 text-center transition-all duration-300 ease-out data-[state=active]:bg-[#0a0a0a] data-[state=active]:text-white data-[state=active]:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
+            className="rounded-[6px] px-4 py-2 text-center transition-all duration-300 ease-out data-[state=active]:bg-[#0a0a0a] data-[state=active]:text-white"
           >
             {signupLabel}
           </TabsTrigger>
