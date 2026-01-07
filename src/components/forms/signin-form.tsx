@@ -27,6 +27,30 @@ export function SignInForm() {
   const [hasValidationError, setHasValidationError] = useState(false);
   const showError = Boolean(error || hasValidationError);
   const { t } = useTranslation();
+  const passwordRules = {
+    minLength: password.length >= 6,
+    hasUppercase: /[A-Z]/.test(password),
+    hasLowercase: /[a-z]/.test(password),
+    hasNumber: /\d/.test(password),
+  };
+  const allPasswordRulesMet = Object.values(passwordRules).every(Boolean);
+
+  const renderPasswordRule = (isMet: boolean, label: string) => (
+    <p className={`flex items-center gap-2 ${isMet ? "text-[#f29b0f]" : "text-white/70"}`}>
+      <span
+        className={`relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border ${
+          isMet ? "border-[#f29b0f]" : "border-white/30"
+        }`}
+      >
+        {isMet ? (
+          <span className="text-[10px] font-bold text-[#f29b0f]">✓</span>
+        ) : (
+          <span className="h-1 w-1 rounded-full bg-white/60" />
+        )}
+      </span>
+      {label}
+    </p>
+  );
 
   const resolveAuthError = (message: string) =>
     message.startsWith("auth/")
@@ -56,9 +80,9 @@ export function SignInForm() {
       return;
     }
 
-    if (password.length < 6) {
+    if (!allPasswordRulesMet) {
       setHasValidationError(true);
-      setError("Password must be at least 6 characters long.");
+      setError("Password must meet all requirements.");
       return;
     }
 
@@ -244,31 +268,23 @@ export function SignInForm() {
               </div>
             </div>
 
-            <div className="space-y-2 text-xs text-white/70">
-              <p className="flex items-center gap-2">
-                <span className="relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/30">
-                  <span className="h-1 w-1 rounded-full bg-white/60" />
-                </span>
-                {t.sigin.passwordRules.firstRule}
-              </p>
-              <p className="flex items-center gap-2">
-                <span className="relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/30">
-                  <span className="h-1 w-1 rounded-full bg-white/60" />
-                </span>
-                {t.sigin.passwordRules.secondRule}
-              </p>
-              <p className="flex items-center gap-2">
-                <span className="relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/30">
-                  <span className="h-1 w-1 rounded-full bg-white/60" />
-                </span>
-                {t.sigin.passwordRules.thirdRule}
-              </p>
-              <p className="flex items-center gap-2">
-                <span className="relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/30">
-                  <span className="h-1 w-1 rounded-full bg-white/60" />
-                </span>
-                {t.sigin.passwordRules.fourthRule}
-              </p>
+            <div className="space-y-2 text-xs">
+              {renderPasswordRule(
+                passwordRules.minLength,
+                t.sigin.passwordRules.firstRule
+              )}
+              {renderPasswordRule(
+                passwordRules.hasUppercase,
+                t.sigin.passwordRules.secondRule
+              )}
+              {renderPasswordRule(
+                passwordRules.hasLowercase,
+                t.sigin.passwordRules.thirdRule
+              )}
+              {renderPasswordRule(
+                passwordRules.hasNumber,
+                t.sigin.passwordRules.fourthRule
+              )}
             </div>
 
             {showError ? (
