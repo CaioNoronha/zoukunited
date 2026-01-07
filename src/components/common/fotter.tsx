@@ -32,21 +32,7 @@ export default function Footer() {
         <div className="flex flex-col gap-2">
           <div className="grid grid-cols-1 items-center gap-4 text-center md:grid-cols-[1fr_auto_1fr]">
             <span className="hidden md:block" />
-            <p className="text-xs font-medium tracking-wide text-[#FAFAFA]">
-              {t.footer.copyright}
-            </p>
-            <div className="flex justify-center md:justify-end">
-              <CustomButton
-                variant="neutral"
-                onClick={() => setIsOpen(true)}
-                className="border border-[#FAFAFA] bg-white/10 text-white hover:bg-white/20"
-              >
-                {displayLanguage}
-              </CustomButton>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center gap-3 text-xs font-medium tracking-wide text-[#FAFAFA]">
+            <div className="flex items-center justify-center gap-3 text-xs font-medium tracking-wide text-[#FAFAFA]">
             {t.footer.follow}
             <span className="flex items-center gap-3">
               <a
@@ -64,7 +50,21 @@ export default function Footer() {
                 <Facebook className="h-4 w-4" />
               </a>
             </span>
+            </div>
+            <div className="flex justify-center md:justify-end">
+              <CustomButton
+                variant="neutral"
+                onClick={() => setIsOpen(true)}
+                className="border border-[#FAFAFA] bg-white/10 text-white hover:bg-white/20"
+              >
+                {displayLanguage}
+              </CustomButton>
+            </div>
           </div>
+
+          <p className="text-center text-xs font-medium tracking-wide text-[#FAFAFA]">
+            {t.footer.copyright}
+          </p>
         </div>
       </div>
       <LanguageModal
