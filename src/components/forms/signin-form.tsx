@@ -250,9 +250,6 @@ export function SignInForm() {
                     disabled={loading}
                     className="h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] px-3 pr-9 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
                   />
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/60">
-                    ▾
-                  </span>
                   {citySuggestions.length > 0 ? (
                     <div className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-md border border-white/10 bg-[#111111] shadow-[0_12px_30px_rgba(0,0,0,0.5)]">
                       {citySuggestions.map((suggestion) => (
