@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -9,6 +9,8 @@ import { signUpWithEmail } from "@/services/auth";
 import { saveUserProfile } from "@/services/user-profile";
 import { getFirebaseLoginMessage } from "@/lib/login-errors";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useLanguage } from "@/hooks/useLanguage";
+import { fetchPlaceSuggestions, type PlaceSuggestion } from "@/services/locationService";
 
 export function SignInForm() {
   const router = useRouter();
@@ -22,11 +24,16 @@ export function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [citySuggestions, setCitySuggestions] = useState<PlaceSuggestion[]>([]);
+  const [cityLoading, setCityLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasValidationError, setHasValidationError] = useState(false);
   const showError = Boolean(error || hasValidationError);
   const { t } = useTranslation();
+  const { language } = useLanguage();
+  const cityDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const skipCitySearchRef = useRef(false);
   const passwordRules = {
     minLength: password.length >= 6,
     hasUppercase: /[A-Z]/.test(password),
@@ -63,6 +70,32 @@ export function SignInForm() {
       router.replace(redirect ?? "/home");
     }
   }, [redirect, router, user]);
+
+  useEffect(() => {
+    if (skipCitySearchRef.current) {
+      skipCitySearchRef.current = false;
+      return;
+    }
+
+    const query = city.trim();
+    if (query.length < 2) {
+      setCitySuggestions([]);
+      setCityLoading(false);
+      return;
+    }
+
+    if (cityDebounceRef.current) clearTimeout(cityDebounceRef.current);
+    setCityLoading(true);
+    cityDebounceRef.current = setTimeout(async () => {
+      const suggestions = await fetchPlaceSuggestions(query, language);
+      setCitySuggestions(suggestions);
+      setCityLoading(false);
+    }, 300);
+
+    return () => {
+      if (cityDebounceRef.current) clearTimeout(cityDebounceRef.current);
+    };
+  }, [city, language]);
 
   const handleSignUp = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -220,6 +253,29 @@ export function SignInForm() {
                   <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/60">
                     ▾
                   </span>
+                  {citySuggestions.length > 0 ? (
+                    <div className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-md border border-white/10 bg-[#111111] shadow-[0_12px_30px_rgba(0,0,0,0.5)]">
+                      {citySuggestions.map((suggestion) => (
+                        <button
+                          key={suggestion.id}
+                          type="button"
+                          onMouseDown={() => {
+                            skipCitySearchRef.current = true;
+                            setCity(suggestion.description);
+                            setCitySuggestions([]);
+                          }}
+                          className="w-full px-3 py-2 text-left text-sm text-white/80 transition hover:bg-white/10 hover:text-white"
+                        >
+                          {suggestion.description}
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
+                  {cityLoading ? (
+                    <span className="absolute right-8 top-1/2 -translate-y-1/2 text-[10px] text-white/50">
+                      ...
+                    </span>
+                  ) : null}
                 </div>
               </div>
               <div className="space-y-2">
