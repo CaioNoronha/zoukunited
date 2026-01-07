@@ -2,30 +2,46 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
 } from "@/components/ui/navigation-menu";
-import { Menu, X } from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { signOut } from "@/services/auth";
 
 export default function NavBar() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const pathname = usePathname();
   const { t } = useTranslation();
   const { user, loading } = useAuth();
+  const router = useRouter();
 
   const displayName =
     user?.displayName?.trim() ||
+    user?.providerData?.[0]?.displayName?.trim() ||
     (user?.email ? user.email.split("@")[0] : "") ||
     "Usuário";
   const initials = displayName.slice(0, 2).toUpperCase();
+  const photoUrl = user?.photoURL || user?.providerData?.[0]?.photoURL || undefined;
+
+  const handleLogout = async () => {
+    await signOut();
+    setMenuOpen(false);
+    router.push("/login");
+  };
 
   const links = [
     { label: t.navbar.aboutus, href: "/about" },
@@ -82,12 +98,27 @@ export default function NavBar() {
           </NavigationMenu>
           {!loading && user ? (
             <div className="ml-2 flex items-center">
-              <Avatar className="h-8 w-8 border border-white/20">
-                <AvatarImage src={user.photoURL ?? undefined} alt={displayName} />
-                <AvatarFallback className="text-xs font-semibold text-white">
-                  {initials}
-                </AvatarFallback>
-              </Avatar>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button type="button" className="rounded-full">
+                    <Avatar className="h-8 w-8 border border-white/20">
+                      <AvatarImage
+                        src={photoUrl}
+                        alt={displayName}
+                      />
+                      <AvatarFallback className="text-xs font-semibold text-white">
+                        {initials}
+                      </AvatarFallback>
+                    </Avatar>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" sideOffset={8}>
+                  <DropdownMenuItem onSelect={handleLogout}>
+                    <LogOut className="text-[#f29b0f]" />
+                    {t.navbar.logout}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           ) : null}
         </div>
@@ -202,15 +233,30 @@ export default function NavBar() {
                   }}
                   className="flex items-center gap-3"
                 >
-                  <Avatar className="h-9 w-9 border border-white/20">
-                    <AvatarImage src={user.photoURL ?? undefined} alt={displayName} />
-                    <AvatarFallback className="text-xs font-semibold text-white">
-                      {initials}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="text-lg font-medium text-white">
-                    {displayName}
-                  </span>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button type="button" className="flex items-center gap-3">
+                        <Avatar className="h-9 w-9 border border-white/20">
+                          <AvatarImage
+                            src={photoUrl}
+                            alt={displayName}
+                          />
+                          <AvatarFallback className="text-xs font-semibold text-white">
+                            {initials}
+                          </AvatarFallback>
+                        </Avatar>
+                        <span className="text-lg font-medium text-white">
+                          {displayName}
+                        </span>
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" sideOffset={8}>
+                      <DropdownMenuItem onSelect={handleLogout}>
+                        <LogOut className="text-[#f29b0f]" />
+                        {t.navbar.logout}
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </motion.div>
               ) : null}
             </div>

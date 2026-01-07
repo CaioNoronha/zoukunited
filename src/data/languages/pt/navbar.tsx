@@ -3,7 +3,8 @@ const navbar = {
     festivals: "Festivais",
     classes: "Classes",
     login: "Login",
-    signup: "Sign Up"
+    signup: "Sign Up",
+    logout: "Sair"
 }
 
 export default navbar;
