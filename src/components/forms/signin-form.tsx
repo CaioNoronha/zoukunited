@@ -34,6 +34,7 @@ export function SignInForm() {
     hasNumber: /\d/.test(password),
   };
   const allPasswordRulesMet = Object.values(passwordRules).every(Boolean);
+  const isConfirmMatch = confirmPassword.length > 0 && password === confirmPassword;
 
   const renderPasswordRule = (isMet: boolean, label: string) => (
     <p className={`flex items-center gap-2 ${isMet ? "text-[#f29b0f]" : "text-white/70"}`}>
@@ -256,15 +257,24 @@ export function SignInForm() {
                 <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
                   {t.sigin.field.confirmPassword}
                 </label>
-                <input
-                  type="password"
-                  placeholder="Confirm your password"
-                  value={confirmPassword}
-                  onChange={(event) => setConfirmPassword(event.target.value)}
-                  aria-invalid={showError}
-                  disabled={loading}
-                  className="h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] px-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
-                />
+                <div className="relative">
+                  <input
+                    type="password"
+                    placeholder="Confirm your password"
+                    value={confirmPassword}
+                    onChange={(event) => setConfirmPassword(event.target.value)}
+                    aria-invalid={showError}
+                    disabled={loading}
+                    className={`h-11 w-full rounded-md border bg-[#0a0a0a] px-3 pr-10 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25 ${
+                      isConfirmMatch ? "border-[#f29b0f]" : "border-white/15"
+                    }`}
+                  />
+                  {isConfirmMatch ? (
+                    <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-[#f29b0f]">
+                      ✓
+                    </span>
+                  ) : null}
+                </div>
               </div>
             </div>
 
