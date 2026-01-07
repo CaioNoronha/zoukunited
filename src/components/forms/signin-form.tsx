@@ -238,7 +238,7 @@ export function SignInForm() {
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
-                  {t.sigin.field.city}
+                  {t.sigin.field.country}
                 </label>
                 <div className="relative">
                   <input

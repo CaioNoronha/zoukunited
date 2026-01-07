@@ -8,7 +8,7 @@ const sigin = {
     field: {
         firstName: "Nombre",
         lastName: "Apellido",
-        city: "Ciudad",
+        country: "País",
         phone: "Teléfono",
         password: "Contraseña",
         confirmPassword: "Confirmar contraseña"
