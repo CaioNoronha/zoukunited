@@ -204,7 +204,7 @@ export function SignInForm() {
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter your first name"
+                  placeholder={t.sigin.placeholder.firstName}
                   value={firstName}
                   onChange={(event) => setFirstName(event.target.value)}
                   aria-invalid={showError}
@@ -218,7 +218,7 @@ export function SignInForm() {
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter your last name"
+                  placeholder={t.sigin.placeholder.lastName}
                   value={lastName}
                   onChange={(event) => setLastName(event.target.value)}
                   aria-invalid={showError}
@@ -234,7 +234,7 @@ export function SignInForm() {
               </label>
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t.sigin.placeholder.email}
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 aria-invalid={showError}
@@ -254,7 +254,7 @@ export function SignInForm() {
                   </span>
                   <input
                     type="text"
-                    placeholder={t.sigin.field.country}
+                    placeholder={t.sigin.placeholder.country}
                     value={countryQuery}
                     onChange={(event) => {
                       setCountryQuery(event.target.value);
@@ -315,7 +315,7 @@ export function SignInForm() {
                 </label>
                 <input
                   type="tel"
-                  placeholder="Enter your phone number"
+                  placeholder={t.sigin.placeholder.phone}
                   value={phone}
                   onChange={(event) => setPhone(event.target.value)}
                   aria-invalid={showError}
@@ -332,7 +332,7 @@ export function SignInForm() {
                 </label>
                 <input
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder={t.sigin.placeholder.password}
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                   aria-invalid={showError}
@@ -347,7 +347,7 @@ export function SignInForm() {
                 <div className="relative">
                   <input
                     type="password"
-                    placeholder="Confirm your password"
+                    placeholder={t.sigin.placeholder.confirmPassword}
                     value={confirmPassword}
                     onChange={(event) => setConfirmPassword(event.target.value)}
                     aria-invalid={showError}

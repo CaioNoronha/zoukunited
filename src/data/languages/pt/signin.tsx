@@ -23,7 +23,13 @@ const sigin = {
         createAccount: "Criar conta"
     },
     placeholder: {
-        
+        firstName: "Digite seu primeiro nome",
+        lastName: "Digite seu sobrenome",
+        email: "Digite seu email",
+        country: "Selecione seu país",
+        phone: "Digite seu telefone",
+        password: "Digite sua senha",
+        confirmPassword: "Confirme sua senha"
     }
 }
 

@@ -21,6 +21,15 @@ const sigin = {
     },
     button: {
         createAccount: "Crear una cuenta"
+    },
+    placeholder: {
+        firstName: "Ingresa tu nombre",
+        lastName: "Ingresa tu apellido",
+        email: "Ingresa tu correo electrónico",
+        country: "Selecciona tu país",
+        phone: "Ingresa tu teléfono",
+        password: "Ingresa tu contraseña",
+        confirmPassword: "Confirma tu contraseña"
     }
 }
 
