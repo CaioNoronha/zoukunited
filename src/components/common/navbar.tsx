@@ -88,7 +88,7 @@ export default function NavBar() {
             <button
               type="button"
               onClick={() => setLanguageOpen(true)}
-              className="flex h-8 w-16 items-center justify-between rounded-full px-2 text-xs font-semibold uppercase text-white/70 hover:text-white"
+              className="flex h-8 w-16 items-center justify-between rounded-full px-2 text-sm font-semibold uppercase leading-none text-white/70 hover:text-white"
             >
               <span>{language.toUpperCase()}</span>
               <ChevronDown className="h-4 w-4" />
@@ -190,7 +190,7 @@ export default function NavBar() {
                 <button
                   type="button"
                   onClick={() => setLanguageOpen(true)}
-                  className="flex h-8 w-16 items-center justify-between rounded-full px-2 text-xs font-semibold uppercase text-white/70"
+                  className="flex h-8 w-16 items-center justify-between rounded-full px-2 text-sm font-semibold uppercase leading-none text-white/70"
                 >
                   <span>{language.toUpperCase()}</span>
                   <ChevronDown className="h-4 w-4" />
