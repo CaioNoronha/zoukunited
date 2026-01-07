@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react";
 import { Montserrat } from "next/font/google";
 
 import { SignInForm } from "@/components/forms/signin-form";
@@ -15,7 +16,9 @@ export default function SignUpPage() {
     <div
       className={`${montserrat.className} relative isolate flex min-h-full w-full items-center bg-[#0a0a0a] px-6 py-8 text-white`}
     >
-      <SignInForm />
+      <Suspense fallback={null}>
+        <SignInForm />
+      </Suspense>
     </div>
   );
 }

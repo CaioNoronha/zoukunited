@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react";
 import { Montserrat } from "next/font/google";
 
 import { LoginForm } from "@/components/forms/login-form";
@@ -15,7 +16,9 @@ export default function LoginPage() {
     <div
       className={`${montserrat.className} relative isolate min-h-full w-full bg-[#0a0a0a] px-6 pb-6 pt-24 text-white`}
     >
-      <LoginForm />
+      <Suspense fallback={null}>
+        <LoginForm />
+      </Suspense>
     </div>
   );
 }
