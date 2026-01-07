@@ -21,6 +21,9 @@ const sigin = {
     },
     button: {
         createAccount: "Criar conta"
+    },
+    placeholder: {
+        
     }
 }
 

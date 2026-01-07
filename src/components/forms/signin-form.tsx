@@ -281,7 +281,9 @@ export function SignInForm() {
                     }}
                     aria-invalid={showError}
                     disabled={loading}
-                    className="h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] py-2 pl-10 pr-9 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25"
+                    className={`h-11 w-full rounded-md border border-white/15 bg-[#0a0a0a] py-2 pr-9 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/25 ${
+                      selectedCountry ? "pl-10" : "pl-3"
+                    }`}
                   />
                   <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/50">
                     ▾
