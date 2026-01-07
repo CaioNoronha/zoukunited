@@ -12,17 +12,26 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useAuth } from "@/hooks/useAuth";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function NavBar() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const pathname = usePathname();
   const { t } = useTranslation();
+  const { user, loading } = useAuth();
+
+  const displayName =
+    user?.displayName?.trim() ||
+    (user?.email ? user.email.split("@")[0] : "") ||
+    "Usuário";
+  const initials = displayName.slice(0, 2).toUpperCase();
 
   const links = [
     { label: t.navbar.aboutus, href: "/about" },
     { label: t.navbar.festivals, href: "/event-page" },
     { label: t.navbar.classes, href: "/classes" },
-    { label: t.navbar.login, href: "/login" },
+    ...(user ? [] : [{ label: t.navbar.login, href: "/login" }]),
   ];
 
   React.useEffect(() => {
@@ -52,7 +61,7 @@ export default function NavBar() {
         </div>
 
         {/* Menu Desktop */}
-        <div className="hidden items-center gap-6 sm:flex">
+        <div className="hidden items-center gap-6 sm:flex sm:ml-auto sm:-mr-28">
           <NavigationMenu>
             <NavigationMenuList className="flex items-center gap-6 lg:gap-8">
               {links.map((item) => (
@@ -71,6 +80,16 @@ export default function NavBar() {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
+          {!loading && user ? (
+            <div className="ml-2 flex items-center">
+              <Avatar className="h-8 w-8 border border-white/20">
+                <AvatarImage src={user.photoURL ?? undefined} alt={displayName} />
+                <AvatarFallback className="text-xs font-semibold text-white">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
+            </div>
+          ) : null}
         </div>
 
         {/* Mobile Button */}
@@ -163,6 +182,37 @@ export default function NavBar() {
                   </Link>
                 </motion.div>
               ))}
+              {!loading && user ? (
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, y: 10 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        duration: 0.5,
+                        ease: [0.4, 0, 0.2, 1],
+                      },
+                    },
+                    exit: {
+                      opacity: 0,
+                      y: 10,
+                      transition: { duration: 0.3 },
+                    },
+                  }}
+                  className="flex items-center gap-3"
+                >
+                  <Avatar className="h-9 w-9 border border-white/20">
+                    <AvatarImage src={user.photoURL ?? undefined} alt={displayName} />
+                    <AvatarFallback className="text-xs font-semibold text-white">
+                      {initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="text-lg font-medium text-white">
+                    {displayName}
+                  </span>
+                </motion.div>
+              ) : null}
             </div>
           </motion.div>
         )}
