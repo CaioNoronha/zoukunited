@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { signInWithEmail, signInWithGoogle } from "@/services/auth";
 import { ensureUserProfile } from "@/services/user-profile";
+import { useTranslation } from "@/hooks/useTranslation";
 import {
   getFirebaseLoginMessage,
   getValidationMessage,
@@ -23,6 +24,7 @@ export function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [hasValidationError, setHasValidationError] = useState(false);
   const showError = Boolean(error || hasValidationError);
+  const { t } = useTranslation();
 
   const resolveAuthError = (message: string) =>
     message.startsWith("auth/")
@@ -116,8 +118,7 @@ export function LoginForm() {
 
           <div className="mt-5 space-y-2 text-left">
             <p className="text-sm text-white/55">
-              Join the rhythm, feel the connection - Brazilian Zouk energy
-              awaits you!
+              {t.login.info.message}
             </p>
           </div>
 
@@ -138,7 +139,7 @@ export function LoginForm() {
             </div>
             <div className="space-y-2">
               <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
-                Password
+                {t.login.field.password}
               </label>
               <input
                 type="password"
@@ -157,13 +158,13 @@ export function LoginForm() {
                   type="checkbox"
                   className="h-4 w-4 appearance-none rounded-[3px] border border-[#f29b0f] bg-transparent checked:bg-[#f29b0f] checked:border-[#f29b0f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f29b0f]/40"
                 />
-                Remember me
+                {t.login.button.rememberMe}
               </label>
               <Link
                 href="/forgot-password"
                 className="text-[#f29b0f] hover:text-[#ffb357]"
               >
-                Forgot password?
+                {t.login.button.forgotPassword}
               </Link>
             </div>
 
@@ -183,7 +184,7 @@ export function LoginForm() {
 
             <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-white/35">
               <span className="h-px flex-1 bg-white/15" />
-              OR
+              {t.login.info.or}
               <span className="h-px flex-1 bg-white/15" />
             </div>
 
@@ -215,7 +216,7 @@ export function LoginForm() {
                   d="M43.6 20.5h-1.8V20H24v8h11.3c-1.1 3.1-3.4 5.3-6.2 6.8l6.1 5C38.8 36.9 44.5 31.8 44.5 25c0-1.5-.2-3-.6-4.5z"
                 />
               </svg>
-              Continue with Google
+              {t.login.button.continueWithGoogle}
             </button>
           </form>
         </div>

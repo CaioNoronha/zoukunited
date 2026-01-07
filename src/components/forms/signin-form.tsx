@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { signUpWithEmail } from "@/services/auth";
 import { saveUserProfile } from "@/services/user-profile";
 import { getFirebaseLoginMessage } from "@/lib/login-errors";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function SignInForm() {
   const router = useRouter();
@@ -25,6 +26,7 @@ export function SignInForm() {
   const [error, setError] = useState<string | null>(null);
   const [hasValidationError, setHasValidationError] = useState(false);
   const showError = Boolean(error || hasValidationError);
+  const { t } = useTranslation();
 
   const resolveAuthError = (message: string) =>
     message.startsWith("auth/")
@@ -124,8 +126,7 @@ export function SignInForm() {
 
           <div className="mt-5 space-y-2 text-left">
             <p className="text-sm text-white/55">
-              Join the rhythm, feel the connection - Brazilian Zouk energy
-              awaits you!
+              {t.sigin.info.message}
             </p>
           </div>
 
@@ -133,7 +134,7 @@ export function SignInForm() {
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
-                  First Name
+                  {t.sigin.field.firstName}
                 </label>
                 <input
                   type="text"
@@ -147,7 +148,7 @@ export function SignInForm() {
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
-                  Last Name
+                  {t.sigin.field.lastName}
                 </label>
                 <input
                   type="text"
@@ -179,7 +180,7 @@ export function SignInForm() {
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
-                  City
+                  {t.sigin.field.city}
                 </label>
                 <div className="relative">
                   <input
@@ -198,7 +199,7 @@ export function SignInForm() {
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
-                  Phone number
+                  {t.sigin.field.phone}
                 </label>
                 <input
                   type="tel"
@@ -215,7 +216,7 @@ export function SignInForm() {
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
-                  Password
+                  {t.sigin.field.password}
                 </label>
                 <input
                   type="password"
@@ -229,7 +230,7 @@ export function SignInForm() {
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-semibold tracking-[0.12em] text-[#FAFAFA]">
-                  Confirm password
+                  {t.sigin.field.confirmPassword}
                 </label>
                 <input
                   type="password"
@@ -248,25 +249,25 @@ export function SignInForm() {
                 <span className="relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/30">
                   <span className="h-1 w-1 rounded-full bg-white/60" />
                 </span>
-                Must be at least 6 characters long
+                {t.sigin.passwordRules.firstRule}
               </p>
               <p className="flex items-center gap-2">
                 <span className="relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/30">
                   <span className="h-1 w-1 rounded-full bg-white/60" />
                 </span>
-                Must include at least one uppercase letter
+                {t.sigin.passwordRules.secondRule}
               </p>
               <p className="flex items-center gap-2">
                 <span className="relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/30">
                   <span className="h-1 w-1 rounded-full bg-white/60" />
                 </span>
-                Must include at least one lowercase letter
+                {t.sigin.passwordRules.thirdRule}
               </p>
               <p className="flex items-center gap-2">
                 <span className="relative inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/30">
                   <span className="h-1 w-1 rounded-full bg-white/60" />
                 </span>
-                Must include at least one number
+                {t.sigin.passwordRules.fourthRule}
               </p>
             </div>
 
@@ -281,13 +282,13 @@ export function SignInForm() {
               disabled={loading}
               className="h-11 w-full rounded-md bg-[#f29b0f] text-sm font-semibold text-black shadow-[0_10px_30px_rgba(242,155,15,0.35)] transition hover:bg-[#ffb357] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {loading ? "Creating account..." : "Create account"}
+              {loading ? t.sigin.info.loading : t.sigin.button.createAccount}
             </button>
 
             <p className="text-xs text-white/60">
-              By creating an account, you agree to our{" "}
+              {t.sigin.info.agreement}{" "}
               <Link href="/terms" className="text-[#f29b0f] hover:text-[#ffb357]">
-                Terms & Services.
+                {t.sigin.info.termsAndServices}
               </Link>
             </p>
           </form>
