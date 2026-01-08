@@ -69,7 +69,8 @@ export default function NavBar() {
         </div>
 
         {/* Menu Desktop */}
-        <div className="hidden items-center gap-6 sm:flex">
+        <div className="flex items-center gap-6">
+          {/*
           <NavigationMenu>
             <NavigationMenuList className="flex items-center gap-6 lg:gap-8">
               {links.map((item) => (
@@ -88,6 +89,7 @@ export default function NavBar() {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
+          */}
           <div className="relative inline-flex w-fit">
             <button
               type="button"
@@ -101,6 +103,7 @@ export default function NavBar() {
         </div>
 
         {/* Mobile Button */}
+        {/*
         <div className="z-[70] sm:hidden">
           <button
             aria-label="Toggle Menu"
@@ -132,9 +135,11 @@ export default function NavBar() {
             </AnimatePresence>
           </button>
         </div>
+        */}
       </div>
 
       {/* Menu Mobile */}
+      {/*
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -205,6 +210,7 @@ export default function NavBar() {
           </motion.div>
         )}
       </AnimatePresence>
+      */}
       <LanguageModal
         isOpen={languageOpen}
         onClose={() => setLanguageOpen(false)}
