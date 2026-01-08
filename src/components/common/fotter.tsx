@@ -13,16 +13,20 @@ export default function Footer() {
           Follow us on social media
           <span className="flex items-center gap-3">
             <a
-              href="https://www.instagram.com/miamizoukfestival "
-              className="text-[#FAFAFA] transition hover:text-white"
+              href="https://www.instagram.com/miamizoukfestival"
+              className="text-[#FAFAFA] transition hover:text-[#F39200] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F39200]/70"
               aria-label="Instagram"
+              target="_blank"
+              rel="noreferrer"
             >
               <Instagram className="h-4 w-4" />
             </a>
             <a
               href="https://www.facebook.com/pauloandluizazouk"
-              className="text-[#FAFAFA] transition hover:text-white"
+              className="text-[#FAFAFA] transition hover:text-[#F39200] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F39200]/70"
               aria-label="Facebook"
+              target="_blank"
+              rel="noreferrer"
             >
               <Facebook className="h-4 w-4" />
             </a>

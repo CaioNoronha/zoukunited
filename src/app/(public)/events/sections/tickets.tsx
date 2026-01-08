@@ -114,7 +114,7 @@ export default function TicketsSection() {
   };
 
   return (
-    <section className="bg-neutral-950 px-6 py-14 lg:min-h-[500px]">
+    <section className="bg-neutral-950 px-6 py-14 lg:min-h-[620px]">
       <motion.div
         className="mx-auto w-full max-w-6xl space-y-8"
         variants={containerVariants}

@@ -16,6 +16,8 @@ export default function TicketCard({
   return (
     <a
       href="https://www.danceplace.com/book/it/15077"
+      target="_blank"
+      rel="noreferrer"
       className="relative flex h-full min-h-[340px] w-full max-w-[360px] flex-col rounded-[14px] border border-white/10 bg-[#0d0d0f] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.02)_inset] transition-transform transition-colors duration-200 hover:-translate-y-1 hover:border-[#F39200] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F39200]/70 lg:p-7"
     >
       {tag && (

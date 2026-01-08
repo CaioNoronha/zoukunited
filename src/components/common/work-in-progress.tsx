@@ -13,7 +13,7 @@ export default function WorkInProgress() {
                     transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                 >
                     <Image
-                        src="/logo-zouk-united.png"
+                        src="/icons/logo.png"
                         alt="Zouk United"
                         width={220}
                         height={60}

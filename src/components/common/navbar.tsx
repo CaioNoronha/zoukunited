@@ -54,7 +54,7 @@ export default function NavBar() {
         <div className="flex-shrink-0">
           <Link href="/">
             <Image
-              src="/logo-zouk-united.png"
+              src="/icons/logo.png"
               alt="Zouk United"
               width={180}
               height={48}

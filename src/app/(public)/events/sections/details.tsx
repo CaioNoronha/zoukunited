@@ -31,7 +31,7 @@ const lineVariants: Variants = {
 
 export default function DetailsSection() {
   return (
-    <section id="details" className="bg-neutral-950/95 px-6 py-14 lg:min-h-[500px]">
+    <section id="details" className="bg-neutral-950/95 px-6 py-14 lg:min-h-[620px]">
       <motion.div
         className="mx-auto max-w-6xl space-y-6"
         variants={containerVariants}
