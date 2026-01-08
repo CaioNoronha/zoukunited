@@ -39,7 +39,7 @@ const lineVariants: Variants = {
 
 const tickets = [
   {
-    price: "275.00",
+    price: "$275.00",
     title: "Full Pass - Followers",
     availability: "Available until 2026/08/12 23:59",
     description:
