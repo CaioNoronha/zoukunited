@@ -3,6 +3,7 @@
 import { HorizontalCarousel } from "@/components/common/horizontal-carousel";
 import { Button } from "@/components/ui/button";
 import { motion, type Variants } from "framer-motion";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const easeOut: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
@@ -23,6 +24,8 @@ const itemVariants: Variants = {
 };
 
 export default function HeroSection() {
+  const { t } = useTranslation();
+
   const handleExploreClick = () => {
     const target = document.getElementById("details");
     if (!target) return;
@@ -80,14 +83,14 @@ export default function HeroSection() {
           className="whitespace-nowrap text-[28px] font-light leading-[1.1] text-white sm:text-[40px] lg:text-[48px]"
           variants={itemVariants}
         >
-          Miami Beach Zouk Festival 2026
+          {t.event.hero.title}
         </motion.h1>
         <motion.div variants={itemVariants}>
           <Button
             className="h-10 w-[220px] rounded-xl bg-[#F39200] text-[12px] font-semibold uppercase tracking-[0.2em] text-white hover:bg-[#ffb84d]"
             onClick={handleExploreClick}
           >
-            Explore
+            {t.event.hero.buttonExplore}
           </Button>
         </motion.div>
       </motion.div>

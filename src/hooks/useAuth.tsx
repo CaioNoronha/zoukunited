@@ -3,6 +3,7 @@
 import { useState, useEffect, createContext, useContext, ReactNode } from "react"
 import { User } from "firebase/auth"
 import { onAuthStateChange } from "@/services/auth"
+import { ensureUserProfile } from "@/services/user-profile"
 import { useRouter } from "next/navigation"
 
 interface AuthContextType {
@@ -23,6 +24,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const unsubscribe = onAuthStateChange((user) => {
       setUser(user)
       setLoading(false)
+      if (user) {
+        ensureUserProfile(user).catch((error) => {
+          console.error("Could not create user profile:", error)
+        })
+      }
     })
 
     return () => unsubscribe()

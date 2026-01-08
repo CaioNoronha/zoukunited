@@ -1,10 +1,16 @@
 import navbar from './navbar';
 import home from './home';
 import footer from './footer';
+import event from './event';
+import sigin from './signin';
+import login from './login';
 
 //Spanish
 export const es = {
   navbar,
   home,
   footer,
+  event,
+  login,
+  sigin
 } as const;

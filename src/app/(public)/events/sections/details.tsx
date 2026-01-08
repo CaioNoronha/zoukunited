@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const easeOut: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
@@ -30,6 +31,8 @@ const lineVariants: Variants = {
 };
 
 export default function DetailsSection() {
+  const { t } = useTranslation();
+
   return (
     <section id="details" className="bg-neutral-950/95 px-6 py-14 lg:min-h-[620px]">
       <motion.div
@@ -43,7 +46,7 @@ export default function DetailsSection() {
           className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA]"
           variants={itemVariants}
         >
-          More details
+          {t.event.details.title}
           <motion.span
             aria-hidden="true"
             className="absolute -bottom-1 left-0 h-[2px] w-10 origin-left bg-[#F39200]"
@@ -71,25 +74,23 @@ export default function DetailsSection() {
             <div className="grid grid-cols-2 gap-8 text-white">
               <div className="space-y-2">
                 <p className="text-xs uppercase tracking-[0.2em] text-white/50">
-                  Date
+                  {t.event.details.dateLabel}
                 </p>
                 <p className="text-base font-semibold text-white">
-                  Feb 5-9, 2026
+                  {t.event.details.dateValue}
                 </p>
               </div>
               <div className="space-y-2">
                 <p className="text-xs uppercase tracking-[0.2em] text-white/50">
-                  Time
+                  {t.event.details.timeLabel}
                 </p>
-                <p className="text-base font-semibold text-white">9:30AM</p>
+                <p className="text-base font-semibold text-white">
+                  {t.event.details.timeValue}
+                </p>
               </div>
             </div>
             <p className="leading-relaxed">
-              Miami Beach Zouk Festival offers some of the best worldwide
-              artists who deliver remarkable dance instruction, professionalism,
-              creativity, and entertainment. Join us for a weekend in sunny
-              Miami Beach and enjoy dancing, learning, and staying at the
-              oceanfront hotel! See you soon!
+              {t.event.details.description}
             </p>
           </motion.div>
         </div>
