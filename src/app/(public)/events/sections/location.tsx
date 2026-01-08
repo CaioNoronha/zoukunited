@@ -7,7 +7,7 @@ const easeOut: [number, number, number, number] = [0.4, 0, 0.2, 1];
 const containerVariants: Variants = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.12 },
+    transition: { staggerChildren: 0.2 },
   },
 };
 
@@ -16,7 +16,7 @@ const itemVariants: Variants = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: easeOut },
+    transition: { duration: 0.9, ease: easeOut },
   },
 };
 
@@ -24,7 +24,7 @@ const lineVariants: Variants = {
   hidden: { scaleX: 0 },
   show: {
     scaleX: 1,
-    transition: { duration: 0.5, ease: easeOut, delay: 0.1 },
+    transition: { duration: 0.8, ease: easeOut, delay: 0.15 },
   },
 };
 
