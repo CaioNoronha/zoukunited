@@ -49,7 +49,7 @@ export default function NavBar() {
   return (
     <div className="fixed top-0 left-0 w-full z-50 bg-neutral-950/90 backdrop-blur-md">
       {/* Navbar */}
-      <div className="relative mx-auto flex w-full max-w-[1600px] items-center justify-between px-4 py-4 sm:px-8">
+      <div className="relative mx-auto flex w-full max-w-none items-center justify-between px-3 py-4 sm:px-4">
         {/* Logo */}
         <div className="flex-shrink-0">
           <Link href="/">
@@ -74,8 +74,8 @@ export default function NavBar() {
                     href={item.href}
                     className={`px-2 py-2 text-sm font-medium tracking-wide transition-colors ${
                       pathname === item.href
-                        ? "text-white"
-                        : "text-white/70 hover:text-white"
+                        ? "text-[#ffb84d]"
+                        : "text-white/70 hover:text-[#ffb84d]"
                     }`}
                   >
                     {item.label}
@@ -178,8 +178,8 @@ export default function NavBar() {
                     onClick={() => setMenuOpen(false)}
                     className={`text-3xl font-medium tracking-wide transition-colors ${
                       pathname === item.href
-                        ? "text-white"
-                        : "text-white/70 hover:text-white"
+                        ? "text-[#ffb84d]"
+                        : "text-white/70 hover:text-[#ffb84d]"
                     }`}
                   >
                     {item.label}
