@@ -5,26 +5,27 @@ import { motion } from "framer-motion";
 
 export default function WorkInProgress() {
     return (
-        <div className="flex flex-col min-h-screen">
-            <main className="flex-grow flex items-center justify-center px-4 py-24 text-center">
+        <div className="flex min-h-screen flex-col bg-neutral-950 text-white">
+            <main className="flex flex-1 items-center justify-center px-4 py-24 text-center">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                 >
                     <Image
-                        src="/images/work_in_progress.png"
-                        alt="Em construção"
-                        width={300}
-                        height={300}
-                        className="mb-8 mx-auto"
+                        src="/icons/logo.png"
+                        alt="Zouk United"
+                        width={220}
+                        height={60}
+                        className="mx-auto mb-8 h-10 w-auto"
                         priority
                     />
-                    <h1 className="text-2xl sm:text-3xl font-semibold text-neutral-800 mb-2">
+                    <h1 className="mb-2 text-2xl font-semibold text-white sm:text-3xl">
                         Página em construção
                     </h1>
-                    <p className="text-sm sm:text-base text-neutral-500 max-w-md mx-auto">
-                        Estamos preparando essa parte do site com muito carinho.<br />
+                    <p className="mx-auto max-w-md text-sm text-white/70 sm:text-base">
+                        Estamos preparando essa parte do site com muito carinho.
+                        <br />
                         Volte em breve para mais conteúdo!
                     </p>
                 </motion.div>

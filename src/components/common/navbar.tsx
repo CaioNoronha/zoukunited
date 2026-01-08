@@ -8,21 +8,38 @@ import {
   NavigationMenuList,
   NavigationMenuItem,
 } from "@/components/ui/navigation-menu";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTranslation } from "@/hooks/useTranslation";
 import Image from "next/image";
+import { useLanguage } from "@/hooks/useLanguage";
+import { ScrollToTopInstantly } from "@/components/utils/scroll-to-top";
+import LanguageModal from "@/components/common/language-modal";
+import { useTranslation } from "@/hooks/useTranslation";
+
+type LanguageCode = "en" | "pt" | "es";
+
+const languages: { code: LanguageCode; label: string }[] = [
+  { code: "en", label: "English" },
+  { code: "pt", label: "Português (Brasil)" },
+  { code: "es", label: "Español" },
+];
 
 export default function NavBar() {
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const [languageOpen, setLanguageOpen] = React.useState(false);
   const pathname = usePathname();
+  const { language, setLanguage } = useLanguage();
   const { t } = useTranslation();
 
   const links = [
-    { label: t.navbar.classes, href: "/classes" },
-    { label: t.navbar.events, href: "/events" },
-    { label: t.navbar.about, href: "/about" },
-    { label: t.navbar.login, href: "/login" }
+    { label: "About us", href: "/about" },
+    { label: "Festivals", href: "/events" },
+    { label: "Classes", href: "/classes" },
+    { label: "Log in", href: "/login" },
+  ];
+  const mobileItems = [
+    ...links.map((link) => ({ ...link, type: "link" as const })),
+    { label: language.toUpperCase(), type: "language" as const },
   ];
 
   React.useEffect(() => {
@@ -34,35 +51,35 @@ export default function NavBar() {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-md">
+    <div className="fixed top-0 left-0 w-full z-50 bg-neutral-950/90 backdrop-blur-md">
       {/* Navbar */}
-      <div className="relative max-w-[1600px] mx-auto w-full px-4 sm:px-8 py-3 sm:py-3 flex items-center justify-between">
+      <div className="relative mx-auto flex w-full max-w-none items-center justify-between px-3 py-4 sm:px-4">
         {/* Logo */}
         <div className="flex-shrink-0">
           <Link href="/">
             <Image
-              src="/icons/zoukunited_logo.png"
+              src="/icons/logo.png"
               alt="Zouk United"
-              width={120}
-              height={40}
+              width={180}
+              height={48}
               priority
-              className="h-7 sm:h-8 w-auto select-none"
+              className="h-7 w-auto select-none sm:h-8"
             />
           </Link>
         </div>
 
         {/* Menu Desktop */}
-        <div className="hidden sm:flex flex-1 justify-end pr-6">
+        <div className="hidden items-center gap-6 sm:flex">
           <NavigationMenu>
-            <NavigationMenuList className="flex items-center gap-8 xl:gap-24 lg:gap-16 md:gap-12">
+            <NavigationMenuList className="flex items-center gap-6 lg:gap-8">
               {links.map((item) => (
                 <NavigationMenuItem key={item.href}>
                   <Link
                     href={item.href}
-                    className={`px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
+                    className={`px-2 py-2 text-sm font-medium tracking-wide transition-colors ${
                       pathname === item.href
-                        ? "text-[var(--ds-highlight-1)]"
-                        : "text-[var(--ds-neutral-2)] hover:text-[var(--ds-highlight)] dark:text-[var(--ds-neutral-1)] dark:hover:text-[var(--ds-highlight)]"
+                        ? "text-[#ffb84d]"
+                        : "text-white/70 hover:text-[#ffb84d]"
                     }`}
                   >
                     {item.label}
@@ -71,14 +88,24 @@ export default function NavBar() {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
+          <div className="relative inline-flex w-fit">
+            <button
+              type="button"
+              onClick={() => setLanguageOpen(true)}
+              className="flex h-8 w-16 items-center justify-between rounded-full px-2 text-xs font-semibold uppercase text-white/70 hover:text-white"
+            >
+              <span>{language.toUpperCase()}</span>
+              <ChevronDown className="h-4 w-4" />
+            </button>
+          </div>
         </div>
 
         {/* Mobile Button */}
-        <div className="sm:hidden z-[70]">
+        <div className="z-[70] sm:hidden">
           <button
             aria-label="Toggle Menu"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="text-neutral-900 dark:text-white hover:text-[var(--ds-secondary-pure)] transition"
+            className="text-white hover:text-white/70 transition"
           >
             <AnimatePresence mode="wait" initial={false}>
               {menuOpen ? (
@@ -89,7 +116,7 @@ export default function NavBar() {
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <X className="w-7 h-7" />
+                  <X className="h-7 w-7" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -99,7 +126,7 @@ export default function NavBar() {
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <Menu className="w-7 h-7" />
+                  <Menu className="h-7 w-7" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -127,12 +154,12 @@ export default function NavBar() {
               },
               exit: { opacity: 0, y: -30, transition: { duration: 0.4 } },
             }}
-            className="fixed top-0 left-0 h-screen w-screen sm:hidden bg-gradient-to-b from-white/95 via-white/90 to-white/80 dark:from-black/90 dark:via-black/70 dark:to-black/50 backdrop-blur-md z-[60] flex flex-col px-8 py-20"
+            className="fixed left-0 top-0 z-[60] flex h-screen w-screen flex-col bg-neutral-950/95 px-8 py-20 backdrop-blur-md sm:hidden"
           >
             <div className="flex flex-col gap-8">
-              {links.map((item) => (
+              {mobileItems.map((item) => (
                 <motion.div
-                  key={item.href}
+                  key={item.type === "language" ? "language" : item.href}
                   variants={{
                     hidden: { opacity: 0, y: 10 },
                     visible: {
@@ -150,23 +177,58 @@ export default function NavBar() {
                     },
                   }}
                 >
-                  <Link
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className={`text-3xl font-medium tracking-wide transition-colors ${
-                      pathname === item.href
-                        ? "text-[var(--ds-highlight-1)]"
-                        : "text-[var(--ds-neutral-2)] hover:text-[var(--ds-highlight)] dark:text-[var(--ds-neutral-1)] dark:hover:text-[var(--ds-highlight)]"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
+                  {item.type === "language" ? (
+                    <button
+                      type="button"
+                      onClick={() => setLanguageOpen(true)}
+                      className="flex items-center gap-2 text-3xl font-medium tracking-wide text-white/70 transition-colors hover:text-[#ffb84d]"
+                    >
+                      <span>{item.label}</span>
+                      <ChevronDown className="h-6 w-6" />
+                    </button>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      className={`text-3xl font-medium tracking-wide transition-colors ${
+                        pathname === item.href
+                          ? "text-[#ffb84d]"
+                          : "text-white/70 hover:text-[#ffb84d]"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
                 </motion.div>
               ))}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+      <LanguageModal
+        isOpen={languageOpen}
+        onClose={() => setLanguageOpen(false)}
+        title={t.footer?.language}
+        description={t.footer?.languageDescription}
+      >
+        {languages.map((lang) => (
+          <button
+            key={lang.code}
+            onClick={() => {
+              setLanguage(lang.code);
+              ScrollToTopInstantly();
+              window.location.reload();
+              setLanguageOpen(false);
+              setMenuOpen(false);
+            }}
+            className={`flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white transition hover:bg-white/10 ${
+              lang.code === language ? "border-[#F39200] bg-[#F39200]/15" : ""
+            }`}
+          >
+            <span>{lang.label}</span>
+          </button>
+        ))}
+      </LanguageModal>
     </div>
   );
 }
