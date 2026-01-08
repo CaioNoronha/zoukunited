@@ -7,14 +7,14 @@ const tickets = {
       price: "$275.00",
       availability: "Disponible hasta 12/08/2026 a las 23:59",
       description:
-        "Todas las clases y noches sociales para followers que quieren la experiencia completa.",
+        "Acceso total a clases y fiestas para followers, con un fin de semana lleno de baile y aprendizaje.",
     },
     leaders: {
       title: "Full Pass - Leaders",
       price: "$275.00",
       availability: "Disponible hasta 07/02/2026 a las 23:59",
       description:
-        "Acceso total a clases y fiestas para leaders listos para subir de nivel.",
+        "Acceso total a clases y fiestas para leaders, con un fin de semana lleno de baile y aprendizaje.",
     },
     buddy: {
       title: "Buddy Pass - Leader + Follower o 2 Leaders",
