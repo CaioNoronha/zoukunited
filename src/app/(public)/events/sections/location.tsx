@@ -1,4 +1,7 @@
 export default function LocationSection() {
+  const mapsHref =
+    "https://www.google.com/maps/search/?api=1&query=4333%20Collins%20Ave%2C%20Miami%20Beach%2C%20FL%2C%20United%20States%2C%2033140";
+
   return (
     <section className="relative overflow-hidden bg-neutral-950 px-6 py-14 lg:min-h-[500px]">
       <div className="absolute inset-0">
@@ -26,9 +29,12 @@ export default function LocationSection() {
           <p className="max-w-sm">
             4333 Collins Ave, Miami Beach, FL, United States, 33140
           </p>
-          <button className="w-fit border-b border-white/40 pb-1 text-[20px] font-medium tracking-[0.18em] text-white/80 transition hover:border-white hover:text-white">
+          <a
+            href={mapsHref}
+            className="inline-block w-fit border-b border-white/40 pb-1 text-[20px] font-medium tracking-[0.18em] text-white/80 transition-transform transition-colors duration-200 hover:-translate-y-0.5 hover:border-[#F39200] hover:text-[#F39200] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F39200]/70"
+          >
             View on map
-          </button>
+          </a>
         </div>
       </div>
     </section>
