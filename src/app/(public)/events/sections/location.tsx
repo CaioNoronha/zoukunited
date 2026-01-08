@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const easeOut: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
@@ -29,8 +30,11 @@ const lineVariants: Variants = {
 };
 
 export default function LocationSection() {
-  const mapsHref =
-    "https://www.google.com/maps/search/?api=1&query=4333%20Collins%20Ave%2C%20Miami%20Beach%2C%20FL%2C%20United%20States%2C%2033140";
+  const { t } = useTranslation();
+  const address = t.festival.location.address;
+  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    address,
+  )}`;
 
   return (
     <section className="relative overflow-hidden bg-neutral-950 px-6 py-14 lg:min-h-[620px]">
@@ -52,7 +56,7 @@ export default function LocationSection() {
       >
         <motion.div className="max-w-sm space-y-4" variants={itemVariants}>
           <p className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA]">
-            Location
+            {t.festival.title.location}
             <motion.span
               aria-hidden="true"
               className="absolute -bottom-1 left-0 h-[2px] w-10 origin-left bg-[#F39200]"
@@ -60,15 +64,15 @@ export default function LocationSection() {
             />
           </p>
           <h3 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            <span className="block">Holiday Inn</span>
+            <span className="block">{t.festival.location.nameLine1}</span>
             <span className="block whitespace-nowrap">
-              Miami Beach-Oceanfront
+              {t.festival.location.nameLine2}
             </span>
           </h3>
         </motion.div>
         <motion.div className="space-y-4 text-[20px] text-white/80" variants={itemVariants}>
           <p className="max-w-sm">
-            4333 Collins Ave, Miami Beach, FL, United States, 33140
+            {address}
           </p>
           <a
             href={mapsHref}
@@ -76,7 +80,7 @@ export default function LocationSection() {
             rel="noreferrer"
             className="inline-block w-fit border-b border-white/40 pb-1 text-[20px] font-medium tracking-[0.18em] text-white/80 transition-transform transition-colors duration-200 hover:-translate-y-0.5 hover:border-[#F39200] hover:text-[#F39200] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F39200]/70"
           >
-            View on map
+            {t.festival.button.viewOnMap}
           </a>
         </motion.div>
       </motion.div>
