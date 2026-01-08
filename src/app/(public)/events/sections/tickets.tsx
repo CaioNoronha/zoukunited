@@ -156,8 +156,8 @@ export default function TicketsSection() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="-left-12 top-1/2 size-9 -translate-y-1/2 rounded-full border border-[#F39200]/60 bg-black/40 text-[#F39200] hover:bg-[#F39200]/15 hover:text-[#F39200] sm:-left-14" />
-          <CarouselNext className="-right-12 top-1/2 size-9 -translate-y-1/2 rounded-full border border-[#F39200]/60 bg-black/40 text-[#F39200] hover:bg-[#F39200]/15 hover:text-[#F39200] sm:-right-14" />
+          <CarouselPrevious className="hidden -left-12 top-1/2 size-9 -translate-y-1/2 rounded-full border border-[#F39200]/60 bg-black/40 text-[#F39200] hover:bg-[#F39200]/15 hover:text-[#F39200] sm:flex sm:-left-14" />
+          <CarouselNext className="hidden -right-12 top-1/2 size-9 -translate-y-1/2 rounded-full border border-[#F39200]/60 bg-black/40 text-[#F39200] hover:bg-[#F39200]/15 hover:text-[#F39200] sm:flex sm:-right-14" />
         </Carousel>
       </motion.div>
     </section>

@@ -23,6 +23,39 @@ const itemVariants: Variants = {
 };
 
 export default function HeroSection() {
+  const handleExploreClick = () => {
+    const target = document.getElementById("details");
+    if (!target) return;
+
+    const startY = window.scrollY;
+    const targetY =
+      target.getBoundingClientRect().top + window.scrollY - 24;
+    const distance = targetY - startY;
+    const duration = 1100;
+    const startTime = performance.now();
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotion) {
+      window.scrollTo({ top: targetY, behavior: "auto" });
+      return;
+    }
+
+    const easeInOut = (t: number) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeInOut(progress);
+      window.scrollTo(0, startY + distance * eased);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  };
+
   return (
     <HorizontalCarousel
       slides={[
@@ -50,7 +83,10 @@ export default function HeroSection() {
           Miami Beach Zouk Festival 2026
         </motion.h1>
         <motion.div variants={itemVariants}>
-          <Button className="h-10 w-[220px] rounded-xl bg-[#F39200] text-[12px] font-semibold uppercase tracking-[0.2em] text-white hover:bg-[#ffb84d]">
+          <Button
+            className="h-10 w-[220px] rounded-xl bg-[#F39200] text-[12px] font-semibold uppercase tracking-[0.2em] text-white hover:bg-[#ffb84d]"
+            onClick={handleExploreClick}
+          >
             Explore
           </Button>
         </motion.div>
