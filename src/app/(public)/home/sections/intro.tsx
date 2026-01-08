@@ -14,6 +14,9 @@ export default function Intro() {
       buttonLabel={t.home.intro.button}
       buttonHref="/example"
       images={["/images/home/home_1.jpg", "/images/home/home_2.jpg"]}
+      minHeight="min-h-[520px] sm:min-h-[600px] lg:min-h-[680px]"
+      paddingBottom="pb-14"
+      alignTextBottom
     />
   );
 }
