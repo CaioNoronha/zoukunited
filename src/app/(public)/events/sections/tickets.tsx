@@ -48,34 +48,34 @@ export default function TicketsSection() {
   });
   const tickets = [
     {
-      price: "$275.00",
-      title: t.festival.tickets.fullPassFollowersTitle,
-      availability: t.festival.tickets.fullPassFollowersAvailability,
-      description: t.festival.tickets.fullPassFollowersDescription,
+      price: t.event.tickets.items.followers.price,
+      title: t.event.tickets.items.followers.title,
+      availability: t.event.tickets.items.followers.availability,
+      description: t.event.tickets.items.followers.description,
     },
     {
-      price: "$275.00",
-      title: t.festival.tickets.fullPassLeadersTitle,
-      availability: t.festival.tickets.fullPassLeadersAvailability,
-      description: t.festival.tickets.fullPassLeadersDescription,
+      price: t.event.tickets.items.leaders.price,
+      title: t.event.tickets.items.leaders.title,
+      availability: t.event.tickets.items.leaders.availability,
+      description: t.event.tickets.items.leaders.description,
     },
     {
-      price: "$520.00",
-      title: t.festival.tickets.buddyPassTitle,
-      availability: t.festival.tickets.buddyPassAvailability,
-      description: t.festival.tickets.buddyPassDescription,
+      price: t.event.tickets.items.buddy.price,
+      title: t.event.tickets.items.buddy.title,
+      availability: t.event.tickets.items.buddy.availability,
+      description: t.event.tickets.items.buddy.description,
     },
     {
-      price: "$30.00",
-      title: t.festival.tickets.jackJillTitle,
-      availability: t.festival.tickets.jackJillAvailability,
-      description: t.festival.tickets.jackJillDescription,
+      price: t.event.tickets.items.jackJill.price,
+      title: t.event.tickets.items.jackJill.title,
+      availability: t.event.tickets.items.jackJill.availability,
+      description: t.event.tickets.items.jackJill.description,
     },
     {
-      price: "$30.00",
-      title: t.festival.tickets.prePartyTitle,
-      availability: t.festival.tickets.prePartyAvailability,
-      description: t.festival.tickets.prePartyDescription,
+      price: t.event.tickets.items.preParty.price,
+      title: t.event.tickets.items.preParty.title,
+      availability: t.event.tickets.items.preParty.availability,
+      description: t.event.tickets.items.preParty.description,
     },
   ];
 
@@ -119,7 +119,7 @@ export default function TicketsSection() {
       >
         <motion.div className="space-y-2" variants={itemVariants}>
           <p className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA]">
-            {t.festival.title.tickets}
+            {t.event.tickets.title}
             <motion.span
               aria-hidden="true"
               className="absolute -bottom-1 left-0 h-[2px] w-10 origin-left bg-[#F39200]"

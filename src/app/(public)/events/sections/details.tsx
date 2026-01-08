@@ -46,7 +46,7 @@ export default function DetailsSection() {
           className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA]"
           variants={itemVariants}
         >
-          {t.festival.title.moreDetails}
+          {t.event.details.title}
           <motion.span
             aria-hidden="true"
             className="absolute -bottom-1 left-0 h-[2px] w-10 origin-left bg-[#F39200]"
@@ -74,23 +74,23 @@ export default function DetailsSection() {
             <div className="grid grid-cols-2 gap-8 text-white">
               <div className="space-y-2">
                 <p className="text-xs uppercase tracking-[0.2em] text-white/50">
-                  {t.festival.info.date}
+                  {t.event.details.dateLabel}
                 </p>
                 <p className="text-base font-semibold text-white">
-                  {t.festival.details.dateValue}
+                  {t.event.details.dateValue}
                 </p>
               </div>
               <div className="space-y-2">
                 <p className="text-xs uppercase tracking-[0.2em] text-white/50">
-                  {t.festival.info.time}
+                  {t.event.details.timeLabel}
                 </p>
                 <p className="text-base font-semibold text-white">
-                  {t.festival.details.timeValue}
+                  {t.event.details.timeValue}
                 </p>
               </div>
             </div>
             <p className="leading-relaxed">
-              {t.festival.info.description}
+              {t.event.details.description}
             </p>
           </motion.div>
         </div>

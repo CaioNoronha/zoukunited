@@ -43,7 +43,7 @@ export default function TicketCard({
       <div className="mt-5 border-t border-white/10 pt-4">
         <div className="text-[11px] font-medium text-[#FAFAFA]">
           <span>
-            {t.festival.info.ticketDetails}
+            {t.event.tickets.ticketDetails}
           </span>
         </div>
         <p className="mt-3 text-[11px] leading-relaxed text-white/45">

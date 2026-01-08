@@ -83,14 +83,14 @@ export default function HeroSection() {
           className="whitespace-nowrap text-[28px] font-light leading-[1.1] text-white sm:text-[40px] lg:text-[48px]"
           variants={itemVariants}
         >
-          {t.festival.hero.title}
+          {t.event.hero.title}
         </motion.h1>
         <motion.div variants={itemVariants}>
           <Button
             className="h-10 w-[220px] rounded-xl bg-[#F39200] text-[12px] font-semibold uppercase tracking-[0.2em] text-white hover:bg-[#ffb84d]"
             onClick={handleExploreClick}
           >
-            {t.festival.button.explore}
+            {t.event.hero.buttonExplore}
           </Button>
         </motion.div>
       </motion.div>
