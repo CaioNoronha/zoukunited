@@ -33,7 +33,7 @@ export default function NavBar() {
 
   const links = [
     { label: "About us", href: "/about" },
-    { label: "Festivals", href: "/event-page" },
+    { label: "Festivals", href: "/events" },
     { label: "Classes", href: "/classes" },
     { label: "Log in", href: "/login" },
   ];
