@@ -37,6 +37,10 @@ export default function NavBar() {
     { label: "Classes", href: "/classes" },
     { label: "Log in", href: "/login" },
   ];
+  const mobileItems = [
+    ...links.map((link) => ({ ...link, type: "link" as const })),
+    { label: language.toUpperCase(), type: "language" as const },
+  ];
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -153,9 +157,9 @@ export default function NavBar() {
             className="fixed left-0 top-0 z-[60] flex h-screen w-screen flex-col bg-neutral-950/95 px-8 py-20 backdrop-blur-md sm:hidden"
           >
             <div className="flex flex-col gap-8">
-              {links.map((item) => (
+              {mobileItems.map((item) => (
                 <motion.div
-                  key={item.href}
+                  key={item.type === "language" ? "language" : item.href}
                   variants={{
                     hidden: { opacity: 0, y: 10 },
                     visible: {
@@ -173,29 +177,30 @@ export default function NavBar() {
                     },
                   }}
                 >
-                  <Link
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className={`text-3xl font-medium tracking-wide transition-colors ${
-                      pathname === item.href
-                        ? "text-[#ffb84d]"
-                        : "text-white/70 hover:text-[#ffb84d]"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
+                  {item.type === "language" ? (
+                    <button
+                      type="button"
+                      onClick={() => setLanguageOpen(true)}
+                      className="flex items-center gap-2 text-3xl font-medium tracking-wide text-white/70 transition-colors hover:text-[#ffb84d]"
+                    >
+                      <span>{item.label}</span>
+                      <ChevronDown className="h-6 w-6" />
+                    </button>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      className={`text-3xl font-medium tracking-wide transition-colors ${
+                        pathname === item.href
+                          ? "text-[#ffb84d]"
+                          : "text-white/70 hover:text-[#ffb84d]"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
                 </motion.div>
               ))}
-              <div className="w-fit">
-                <button
-                  type="button"
-                  onClick={() => setLanguageOpen(true)}
-                  className="flex h-8 w-16 items-center justify-between rounded-full px-2 text-xs font-semibold uppercase text-white/70"
-                >
-                  <span>{language.toUpperCase()}</span>
-                  <ChevronDown className="h-4 w-4" />
-                </button>
-              </div>
             </div>
           </motion.div>
         )}
