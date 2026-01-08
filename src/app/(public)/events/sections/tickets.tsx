@@ -1,4 +1,33 @@
-import TicketCard from "./ticket-card";
+"use client";
+
+import TicketCard from "../../../../components/common/ticket-card";
+import { motion, type Variants } from "framer-motion";
+
+const easeOut: [number, number, number, number] = [0.4, 0, 0.2, 1];
+
+const containerVariants: Variants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: easeOut },
+  },
+};
+
+const lineVariants: Variants = {
+  hidden: { scaleX: 0 },
+  show: {
+    scaleX: 1,
+    transition: { duration: 0.5, ease: easeOut, delay: 0.1 },
+  },
+};
 
 const tickets = [
   {
@@ -42,18 +71,31 @@ const tickets = [
 export default function TicketsSection() {
   return (
     <section className="bg-neutral-950 px-6 py-14 lg:min-h-[500px]">
-      <div className="mx-auto w-full max-w-6xl space-y-8">
-        <div className="space-y-2">
-          <p className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-10 after:bg-[#F39200]">
+      <motion.div
+        className="mx-auto w-full max-w-6xl space-y-8"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.25 }}
+      >
+        <motion.div className="space-y-2" variants={itemVariants}>
+          <p className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA]">
             Tickets
+            <motion.span
+              aria-hidden="true"
+              className="absolute -bottom-1 left-0 h-[2px] w-10 origin-left bg-[#F39200]"
+              variants={lineVariants}
+            />
           </p>
-        </div>
+        </motion.div>
         <div className="mx-auto grid auto-rows-fr gap-6 md:grid-cols-3 md:justify-items-center">
           {tickets.map((ticket) => (
-            <TicketCard key={ticket.title} {...ticket} />
+            <motion.div key={ticket.title} variants={itemVariants}>
+              <TicketCard {...ticket} />
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
