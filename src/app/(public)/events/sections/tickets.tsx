@@ -43,18 +43,14 @@ const tickets = [
     title: "Full Pass - Followers",
     availability: "Available until 2026/08/12 23:59",
     description:
-      `Miami Beach Zouk Festival offers some of the best worldwide artists who deliver remarkable dance instruction, professionalism, creativity, and entertainment.
-      Join us for a weekend in Sunny Miami Beach and enjoy dancing, learning, and staying at the oceanfront hotel! See you soon!
-      `
+      "Full access to classes and parties for followers, with a weekend packed with dancing and learning."
   },
   {
     price: "$275.00",
     title: "Full Pass - Leaders",
     availability: "Available until 2026/02/07 23:59",
     description:
-      `Miami Beach Zouk Festival offers some of the best worldwide artists who deliver remarkable dance instruction, professionalism, creativity, and entertainment.
-      Join us for a weekend in Sunny Miami Beach and enjoy dancing, learning, and staying at the oceanfront hotel! See you soon!
-      `
+      "Full access to classes and parties for leaders, with a weekend packed with dancing and learning."
   },
   {
     price: "$520.00",
