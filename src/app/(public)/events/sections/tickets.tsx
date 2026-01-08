@@ -1,7 +1,15 @@
 "use client";
 
+import { useRef, type PointerEvent, type MouseEvent } from "react";
 import TicketCard from "../../../../components/common/ticket-card";
 import { motion, type Variants } from "framer-motion";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const easeOut: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
@@ -69,6 +77,42 @@ const tickets = [
 ];
 
 export default function TicketsSection() {
+  const dragStateRef = useRef({
+    startX: 0,
+    startY: 0,
+    moved: false,
+    lastDragAt: 0,
+  });
+
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    dragStateRef.current.startX = event.clientX;
+    dragStateRef.current.startY = event.clientY;
+    dragStateRef.current.moved = false;
+  };
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    const deltaX = Math.abs(event.clientX - dragStateRef.current.startX);
+    const deltaY = Math.abs(event.clientY - dragStateRef.current.startY);
+    if (deltaX > 6 || deltaY > 6) {
+      dragStateRef.current.moved = true;
+      dragStateRef.current.lastDragAt = Date.now();
+    }
+  };
+
+  const handlePointerUp = () => {
+    if (dragStateRef.current.moved) {
+      dragStateRef.current.lastDragAt = Date.now();
+      dragStateRef.current.moved = false;
+    }
+  };
+
+  const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
+    if (Date.now() - dragStateRef.current.lastDragAt < 250) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
+
   return (
     <section className="bg-neutral-950 px-6 py-14 lg:min-h-[500px]">
       <motion.div
@@ -88,13 +132,33 @@ export default function TicketsSection() {
             />
           </p>
         </motion.div>
-        <div className="mx-auto grid auto-rows-fr gap-6 md:grid-cols-3 md:justify-items-center">
-          {tickets.map((ticket) => (
-            <motion.div key={ticket.title} variants={itemVariants}>
-              <TicketCard {...ticket} />
-            </motion.div>
-          ))}
-        </div>
+        <Carousel
+          opts={{ align: "start", dragFree: true }}
+          className="w-full"
+        >
+          <CarouselContent className="py-2">
+            {tickets.map((ticket) => (
+              <CarouselItem
+                key={ticket.title}
+                className="basis-[85%] sm:basis-[60%] md:basis-[45%] lg:basis-[33%]"
+              >
+                <motion.div
+                  variants={itemVariants}
+                  className="h-full"
+                  onPointerDown={handlePointerDown}
+                  onPointerMove={handlePointerMove}
+                  onPointerUp={handlePointerUp}
+                  onPointerCancel={handlePointerUp}
+                  onClickCapture={handleClickCapture}
+                >
+                  <TicketCard {...ticket} />
+                </motion.div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="-left-12 top-1/2 size-9 -translate-y-1/2 rounded-full border border-[#F39200]/60 bg-black/40 text-[#F39200] hover:bg-[#F39200]/15 hover:text-[#F39200] sm:-left-14" />
+          <CarouselNext className="-right-12 top-1/2 size-9 -translate-y-1/2 rounded-full border border-[#F39200]/60 bg-black/40 text-[#F39200] hover:bg-[#F39200]/15 hover:text-[#F39200] sm:-right-14" />
+        </Carousel>
       </motion.div>
     </section>
   );
