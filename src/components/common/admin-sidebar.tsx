@@ -8,6 +8,7 @@ import { collection, getDocs } from "firebase/firestore"
 import { useRouter } from "next/navigation"
 
 import { NavMain } from "@/components/common/nav-main"
+import { useTranslation } from "@/hooks/useTranslation"
 import {
   Sidebar,
   SidebarContent,
@@ -21,9 +22,13 @@ import {
 import { signOut } from "@/services/auth"
 import { db } from "@/lib/firebase"
 
-function buildSubItems(items: { id: string; title: string }[], baseUrl: string) {
+function buildSubItems(
+  items: { id: string; title: string }[],
+  baseUrl: string,
+  emptyLabel: string
+) {
   if (items.length === 0) {
-    return [{ title: "Sem registros", url: baseUrl }]
+    return [{ title: emptyLabel, url: baseUrl }]
   }
   return items.map((item) => ({
     title: item.title,
@@ -32,6 +37,7 @@ function buildSubItems(items: { id: string; title: string }[], baseUrl: string) 
 }
 
 export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { t } = useTranslation()
   const router = useRouter()
   const [events, setEvents] = React.useState<{ id: string; title: string }[]>([])
   const [courses, setCourses] = React.useState<{ id: string; title: string }[]>([])
@@ -80,30 +86,38 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
   }, [])
 
   const navMain = React.useMemo(() => {
-    const eventItems = buildSubItems(events, "/admin/events").map((item) => ({
+    const eventItems = buildSubItems(
+      events,
+      "/admin/events",
+      t.sidebar?.admin?.empty || "Sem registros"
+    ).map((item) => ({
       ...item,
       icon: CalendarCheck2,
     }))
-    const courseItems = buildSubItems(courses, "/admin/courses").map((item) => ({
+    const courseItems = buildSubItems(
+      courses,
+      "/admin/courses",
+      t.sidebar?.admin?.empty || "Sem registros"
+    ).map((item) => ({
       ...item,
       icon: GraduationCap,
     }))
 
     return [
       {
-        title: "Eventos",
+        title: t.sidebar?.admin?.events || "Eventos",
         url: "/admin/events",
         icon: LayoutPanelLeft,
         items: eventItems,
       },
       {
-        title: "Cursos",
+        title: t.sidebar?.admin?.courses || "Cursos",
         url: "/admin/courses",
         icon: GraduationCap,
         items: courseItems,
       },
     ]
-  }, [events, courses])
+  }, [events, courses, t.sidebar?.admin?.courses, t.sidebar?.admin?.empty, t.sidebar?.admin?.events])
 
   const handleLogout = async () => {
     await signOut()
@@ -134,7 +148,7 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={navMain} label="Admin" />
+        <NavMain items={navMain} label={t.sidebar?.admin?.label || "Admin"} />
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>

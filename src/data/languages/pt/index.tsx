@@ -4,6 +4,7 @@ import footer from './footer';
 import event from './event';
 import sigin from './signin';
 import login from './login';
+import sidebar from './sidebar';
 
 //Portuguese
 export const pt = {
@@ -12,5 +13,6 @@ export const pt = {
   footer,
   event,
   login,
-  sigin
+  sigin,
+  sidebar
 } as const;
