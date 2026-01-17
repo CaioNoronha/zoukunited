@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="flex min-h-screen flex-col">
             <NavBar />
             <ScrollToTopOnMount />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 bg-[#0a0a0a]">{children}</main>
             <Footer />
           </div>
         </Providers>

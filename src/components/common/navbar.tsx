@@ -2,40 +2,55 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
 } from "@/components/ui/navigation-menu";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, LogOut, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useLanguage } from "@/hooks/useLanguage";
-import { ScrollToTopInstantly } from "@/components/utils/scroll-to-top";
-import LanguageModal from "@/components/common/language-modal";
 import { useTranslation } from "@/hooks/useTranslation";
-
-type LanguageCode = "en" | "pt" | "es";
-
-const languages: { code: LanguageCode; label: string }[] = [
-  { code: "en", label: "English" },
-  { code: "pt", label: "Português (Brasil)" },
-  { code: "es", label: "Español" },
-];
+import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/hooks/useLanguage";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { signOut } from "@/services/auth";
 
 export default function NavBar() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [languageOpen, setLanguageOpen] = React.useState(false);
   const pathname = usePathname();
-  const { language, setLanguage } = useLanguage();
   const { t } = useTranslation();
+  const { user, loading } = useAuth();
+  const { language, setLanguage } = useLanguage();
+  const router = useRouter();
+
+  const displayName =
+    user?.displayName?.trim() ||
+    user?.providerData?.[0]?.displayName?.trim() ||
+    (user?.email ? user.email.split("@")[0] : "") ||
+    "Usuário";
+  const initials = displayName.slice(0, 2).toUpperCase();
+  const photoUrl = user?.photoURL || user?.providerData?.[0]?.photoURL || undefined;
+
+  const handleLogout = async () => {
+    await signOut();
+    setMenuOpen(false);
+    router.push("/login");
+  };
 
   const links = [
-    { label: "About us", href: "/about" },
-    { label: "Festivals", href: "/events" },
-    { label: "Classes", href: "/classes" },
-    { label: "Log in", href: "/login" },
+    { label: t.navbar.aboutus, href: "/about" },
+    { label: t.navbar.festivals, href: "/events" },
+    { label: t.navbar.classes, href: "/classes" },
+    ...(user ? [] : [{ label: t.navbar.login, href: "/login" }]),
   ];
   const mobileItems = [
     ...links.map((link) => ({ ...link, type: "link" as const })),
@@ -69,8 +84,7 @@ export default function NavBar() {
         </div>
 
         {/* Menu Desktop */}
-        <div className="flex items-center gap-6">
-          {/*
+        <div className="hidden items-center gap-6 sm:flex">
           <NavigationMenu>
             <NavigationMenuList className="flex items-center gap-6 lg:gap-8">
               {links.map((item) => (
@@ -89,21 +103,34 @@ export default function NavBar() {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
-          */}
-          <div className="relative inline-flex w-fit">
-            <button
-              type="button"
-              onClick={() => setLanguageOpen(true)}
-              className="flex h-8 w-16 items-center justify-between rounded-full px-2 text-xs font-semibold uppercase text-white/70 hover:text-white"
-            >
-              <span>{language.toUpperCase()}</span>
-              <ChevronDown className="h-4 w-4" />
-            </button>
-          </div>
+          {!loading && user ? (
+            <div className="ml-2 flex items-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button type="button" className="rounded-full">
+                    <Avatar className="h-8 w-8 border border-white/20">
+                      <AvatarImage
+                        src={photoUrl}
+                        alt={displayName}
+                      />
+                      <AvatarFallback className="text-xs font-semibold text-white">
+                        {initials}
+                      </AvatarFallback>
+                    </Avatar>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" sideOffset={8}>
+                  <DropdownMenuItem onSelect={handleLogout}>
+                    <LogOut className="text-[#f29b0f]" />
+                    {t.navbar.logout}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          ) : null}
         </div>
 
         {/* Mobile Button */}
-        {/*
         <div className="z-[70] sm:hidden">
           <button
             aria-label="Toggle Menu"
@@ -135,11 +162,9 @@ export default function NavBar() {
             </AnimatePresence>
           </button>
         </div>
-        */}
       </div>
 
       {/* Menu Mobile */}
-      {/*
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -210,31 +235,6 @@ export default function NavBar() {
           </motion.div>
         )}
       </AnimatePresence>
-      */}
-      <LanguageModal
-        isOpen={languageOpen}
-        onClose={() => setLanguageOpen(false)}
-        title={t.footer?.language}
-        description={t.footer?.languageDescription}
-      >
-        {languages.map((lang) => (
-          <button
-            key={lang.code}
-            onClick={() => {
-              setLanguage(lang.code);
-              ScrollToTopInstantly();
-              window.location.reload();
-              setLanguageOpen(false);
-              setMenuOpen(false);
-            }}
-            className={`flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white transition hover:bg-white/10 ${
-              lang.code === language ? "border-[#F39200] bg-[#F39200]/15" : ""
-            }`}
-          >
-            <span>{lang.label}</span>
-          </button>
-        ))}
-      </LanguageModal>
     </div>
   );
 }
