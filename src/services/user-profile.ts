@@ -14,6 +14,7 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage
 
 import { auth, signOut } from "@/services/auth"
 import { db, storage } from "@/lib/firebase"
+import { isAdminEmail } from "@/lib/admins"
 
 export type UserProfileData = {
   firstName: string
@@ -25,6 +26,7 @@ export type UserProfileData = {
   photoURL?: string
   displayName?: string
   email?: string | null
+  isAdmin?: boolean
 }
 
 function buildDisplayName(firstName: string, lastName: string) {
@@ -46,6 +48,7 @@ export async function fetchUserProfile(uid: string): Promise<UserProfileData | n
     photoURL: data.photoURL,
     displayName: data.displayName,
     email: data.email,
+    isAdmin: Boolean(data.isAdmin),
   }
 }
 
@@ -53,7 +56,18 @@ export async function ensureUserProfile(user: User) {
   const userRef = doc(db, "users", user.uid)
   const userDoc = await getDoc(userRef)
 
-  if (userDoc.exists()) return
+  if (userDoc.exists()) {
+    const data = userDoc.data() as Partial<UserProfileData>
+    const nextIsAdmin = isAdminEmail(user.email)
+    if (data.isAdmin !== nextIsAdmin) {
+      await setDoc(
+        userRef,
+        { isAdmin: nextIsAdmin, updatedAt: serverTimestamp() },
+        { merge: true }
+      )
+    }
+    return
+  }
 
   const displayName = user.displayName || ""
   const [firstName, ...rest] = displayName.split(" ").filter(Boolean)
@@ -71,6 +85,7 @@ export async function ensureUserProfile(user: User) {
       photoURL: user.photoURL ?? null,
       displayName,
       email: user.email ?? null,
+      isAdmin: isAdminEmail(user.email),
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     },
@@ -129,6 +144,7 @@ export async function saveUserProfile(input: {
         photoURL: photoURL ?? null,
         displayName,
         email: user.email,
+        isAdmin: isAdminEmail(user.email),
         updatedAt: serverTimestamp(),
       },
       { merge: true }
