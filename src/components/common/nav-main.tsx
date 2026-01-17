@@ -51,7 +51,7 @@ export function NavMain({
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton
                   tooltip={item.title}
-                  className="text-white !text-white bg-transparent hover:!text-white focus:!text-white data-[active=true]:!text-white data-[active=true]:!bg-transparent data-[state=open]:!bg-transparent data-[active=true]:!shadow-none data-[state=open]:!shadow-none !shadow-none [&_svg]:text-[var(--ds-primary-1)] [&_svg]:stroke-[var(--ds-primary-1)] hover:!bg-[var(--ds-primary-1)]/14 focus:!bg-[var(--ds-primary-1)]/14 data-[state=open]:hover:!bg-[var(--ds-primary-1)]/14 data-[active=true]:hover:!bg-[var(--ds-primary-1)]/14"
+                  className="text-lg text-white !text-white bg-transparent hover:!text-white focus:!text-white data-[active=true]:!text-white data-[active=true]:!bg-transparent data-[state=open]:!bg-transparent data-[active=true]:!shadow-none data-[state=open]:!shadow-none !shadow-none [&_svg]:!size-5 [&_svg]:text-[var(--ds-primary-1)] [&_svg]:stroke-[var(--ds-primary-1)] hover:!bg-[var(--ds-primary-1)]/14 focus:!bg-[var(--ds-primary-1)]/14 data-[state=open]:hover:!bg-[var(--ds-primary-1)]/14 data-[active=true]:hover:!bg-[var(--ds-primary-1)]/14"
                 >
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
@@ -64,7 +64,7 @@ export function NavMain({
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton
                         asChild
-                        className="text-white !text-white bg-transparent hover:!text-white focus:!text-white data-[active=true]:!text-white data-[active=true]:!bg-[var(--ds-primary-1)]/12 [&_svg]:text-[var(--ds-primary-1)] [&_svg]:stroke-[var(--ds-primary-1)] hover:!bg-[var(--ds-primary-1)]/14 focus:!bg-[var(--ds-primary-1)]/14 data-[active=true]:hover:!bg-[var(--ds-primary-1)]/14"
+                        className="text-lg text-white !text-white bg-transparent hover:!text-white focus:!text-white data-[active=true]:!text-white data-[active=true]:!bg-[var(--ds-primary-1)]/12 [&_svg]:!size-5 [&_svg]:text-[var(--ds-primary-1)] [&_svg]:stroke-[var(--ds-primary-1)] hover:!bg-[var(--ds-primary-1)]/14 focus:!bg-[var(--ds-primary-1)]/14 data-[active=true]:hover:!bg-[var(--ds-primary-1)]/14"
                       >
                         <Link href={subItem.url} prefetch={false}>
                           {subItem.icon && <subItem.icon />}
