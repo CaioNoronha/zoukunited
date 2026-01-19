@@ -476,9 +476,6 @@ export default function AdminCoursesPage() {
                         <span className="ml-2 text-sm">Zouk United</span>
                       </div>
                     )}
-                    <span className="absolute left-4 top-4 rounded-full border border-[#f29b0f]/40 bg-[#f29b0f]/15 px-2 py-0.5 text-xs font-semibold text-[#f29b0f]">
-                      Rascunho
-                    </span>
                   </div>
 
                   <div className="space-y-4 p-6">
@@ -753,40 +750,7 @@ function CourseDialog({ open, onOpenChange, course, onSaved, onDeleted }: Course
           </span>
         </div>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-          <div className="space-y-5">
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-white/80">Título</label>
-              <input
-                value={draftTitle}
-                onChange={(event) => setDraftTitle(event.target.value)}
-                onBlur={() => setTitleTouched(true)}
-                className="h-12 w-full rounded-md border border-white/15 bg-black/60 px-3 text-base text-white outline-none transition focus:border-[#f29b0f]/80 focus:ring-2 focus:ring-[#f29b0f]/30"
-                aria-invalid={titleError}
-              />
-              {titleError && (
-                <p className="text-xs text-[#ffb357]">Título é obrigatório.</p>
-              )}
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-white/80">Descrição</label>
-              <textarea
-                value={draftDescription}
-                onChange={(event) =>
-                  setDraftDescription(event.target.value.slice(0, descriptionLimit))
-                }
-                className="min-h-[140px] w-full rounded-md border border-white/15 bg-black/60 px-3 py-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/80 focus:ring-2 focus:ring-[#f29b0f]/30"
-                placeholder="Explique o que o aluno vai aprender e para quem é o curso."
-              />
-              <div className="flex items-center justify-between text-xs text-white/50">
-                <span>2–3 frases são suficientes. Inclua nível e objetivo.</span>
-                <span>
-                  {descriptionCount}/{descriptionLimit}
-                </span>
-              </div>
-            </div>
-          </div>
-
+        <div className="mt-6 space-y-5">
           <CourseBannerUploader
             previewUrl={bannerPreview}
             onFileChange={(file, preview) => {
@@ -800,6 +764,38 @@ function CourseDialog({ open, onOpenChange, course, onSaved, onDeleted }: Course
               setRemoveBanner(true)
             }}
           />
+
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-white/80">Título</label>
+            <input
+              value={draftTitle}
+              onChange={(event) => setDraftTitle(event.target.value)}
+              onBlur={() => setTitleTouched(true)}
+              className="h-12 w-full rounded-md border border-white/15 bg-black/60 px-3 text-base text-white outline-none transition focus:border-[#f29b0f]/80 focus:ring-2 focus:ring-[#f29b0f]/30"
+              aria-invalid={titleError}
+            />
+            {titleError && (
+              <p className="text-xs text-[#ffb357]">Título é obrigatório.</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-white/80">Descrição</label>
+            <textarea
+              value={draftDescription}
+              onChange={(event) =>
+                setDraftDescription(event.target.value.slice(0, descriptionLimit))
+              }
+              className="min-h-[160px] w-full rounded-md border border-white/15 bg-black/60 px-3 py-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/80 focus:ring-2 focus:ring-[#f29b0f]/30"
+              placeholder="Explique o que o aluno vai aprender e para quem é o curso."
+            />
+            <div className="flex items-center justify-between text-xs text-white/50">
+              <span>2–3 frases são suficientes. Inclua nível e objetivo.</span>
+              <span>
+                {descriptionCount}/{descriptionLimit}
+              </span>
+            </div>
+          </div>
         </div>
 
         <div className="mt-8 border-t border-white/10 pt-6">
