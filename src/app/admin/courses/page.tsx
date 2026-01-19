@@ -662,30 +662,28 @@ function CourseDialog({ open, onOpenChange, course, onSaved, onDeleted }: Course
     const targetIndex = direction === "up" ? index - 1 : index + 1
     if (targetIndex < 0 || targetIndex >= modules.length) return
 
-    const current = modules[index]
-    const target = modules[targetIndex]
-    const currentOrder = current.order ?? index
-    const targetOrder = target.order ?? targetIndex
+    const next = [...modules]
+    const current = next[index]
+    const target = next[targetIndex]
+    next[index] = target
+    next[targetIndex] = current
+    setModules(
+      next.map((item, idx) => ({
+        ...item,
+        order: idx,
+      }))
+    )
 
     try {
-      await Promise.all([
-        updateCourseModuleOrder({
-          courseId: course.id,
-          moduleId: current.id,
-          order: targetOrder,
-        }),
-        updateCourseModuleOrder({
-          courseId: course.id,
-          moduleId: target.id,
-          order: currentOrder,
-        }),
-      ])
-      setModules((prev) => {
-        const next = [...prev]
-        next[index] = { ...target, order: currentOrder }
-        next[targetIndex] = { ...current, order: targetOrder }
-        return next
-      })
+      await Promise.all(
+        next.map((module, idx) =>
+          updateCourseModuleOrder({
+            courseId: course.id,
+            moduleId: module.id,
+            order: idx,
+          })
+        )
+      )
     } catch (error) {
       console.error("Erro ao reordenar módulo", error)
     }
