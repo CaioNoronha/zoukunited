@@ -588,7 +588,7 @@ export default function AdminCoursesPage() {
             Nenhum curso encontrado.
           </div>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {visibleCourses.map((course) => {
               const isEditing = editingCourseId === course.id
               const draft = courseDrafts[course.id] || {
@@ -607,7 +607,7 @@ export default function AdminCoursesPage() {
               return (
                 <div
                   key={course.id}
-                  className="rounded-2xl border border-white/10 bg-black/40 p-6 transition hover:border-white/20"
+                  className="min-h-[240px] w-full rounded-2xl border border-white/10 bg-black/40 p-6 transition hover:border-white/20"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div className="space-y-2">
