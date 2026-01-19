@@ -4,7 +4,7 @@ import * as React from "react"
 import { CalendarCheck2, GraduationCap, LayoutPanelLeft, LogOut } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { collection, getDocs } from "firebase/firestore"
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore"
 import { useRouter } from "next/navigation"
 
 import { NavMain } from "@/components/common/nav-main"
@@ -43,45 +43,48 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
   const [courses, setCourses] = React.useState<{ id: string; title: string }[]>([])
 
   React.useEffect(() => {
-    let cancelled = false
-    const fetchItems = async () => {
-      try {
-        const [eventsSnap, coursesSnap] = await Promise.all([
-          getDocs(collection(db, "events")),
-          getDocs(collection(db, "courses")),
-        ])
+    const eventsQuery = query(collection(db, "events"), orderBy("createdAt", "desc"))
+    const coursesQuery = query(collection(db, "courses"), orderBy("createdAt", "desc"))
 
-        const nextEvents = eventsSnap.docs.map((docSnap) => {
+    const unsubEvents = onSnapshot(
+      eventsQuery,
+      (snap) => {
+        const nextEvents = snap.docs.map((docSnap) => {
           const data = docSnap.data() as { title?: string; name?: string }
           return {
             id: docSnap.id,
             title: String(data.title || data.name || docSnap.id),
           }
         })
-
-        const nextCourses = coursesSnap.docs.map((docSnap) => {
-          const data = docSnap.data() as { title?: string; name?: string }
-          return {
-            id: docSnap.id,
-            title: String(data.title || data.name || docSnap.id),
-          }
-        })
-
-        if (!cancelled) {
-          setEvents(nextEvents)
-          setCourses(nextCourses)
-        }
-      } catch (error) {
-        console.error("Erro ao carregar itens do admin", error)
-        if (!cancelled) {
-          setEvents([])
-          setCourses([])
-        }
+        setEvents(nextEvents)
+      },
+      (error) => {
+        console.error("Erro ao carregar eventos", error)
+        setEvents([])
       }
-    }
-    fetchItems()
+    )
+
+    const unsubCourses = onSnapshot(
+      coursesQuery,
+      (snap) => {
+        const nextCourses = snap.docs.map((docSnap) => {
+          const data = docSnap.data() as { title?: string; name?: string }
+          return {
+            id: docSnap.id,
+            title: String(data.title || data.name || docSnap.id),
+          }
+        })
+        setCourses(nextCourses)
+      },
+      (error) => {
+        console.error("Erro ao carregar cursos", error)
+        setCourses([])
+      }
+    )
+
     return () => {
-      cancelled = true
+      unsubEvents()
+      unsubCourses()
     }
   }, [])
 
