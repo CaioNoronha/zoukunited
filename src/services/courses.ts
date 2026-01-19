@@ -3,6 +3,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   orderBy,
   query,
@@ -16,6 +17,8 @@ import { db, storage } from "@/lib/firebase"
 export type CourseData = {
   title: string
   description?: string | null
+  bannerUrl?: string | null
+  bannerPath?: string | null
   createdAt?: unknown
   updatedAt?: unknown
 }
@@ -75,6 +78,48 @@ export async function updateCourse(courseId: string, input: { title: string; des
   )
 }
 
+export async function updateCourseBanner(input: {
+  courseId: string
+  file: File
+  previousBannerPath?: string | null
+}) {
+  const extension = input.file.name.split(".").pop() || "jpg"
+  const path = `courses/${input.courseId}/banner_${Date.now()}.${extension}`
+  const storageRef = ref(storage, path)
+  await uploadBytes(storageRef, input.file)
+  const bannerUrl = await getDownloadURL(storageRef)
+
+  await setDoc(
+    doc(db, "courses", input.courseId),
+    {
+      bannerUrl,
+      bannerPath: path,
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true }
+  )
+
+  if (input.previousBannerPath) {
+    await deleteObject(ref(storage, input.previousBannerPath)).catch(() => {})
+  }
+
+  return { bannerUrl, bannerPath: path }
+}
+
+export async function removeCourseBanner(input: {
+  courseId: string
+  bannerPath?: string | null
+}) {
+  await setDoc(
+    doc(db, "courses", input.courseId),
+    { bannerUrl: null, bannerPath: null, updatedAt: serverTimestamp() },
+    { merge: true }
+  )
+  if (input.bannerPath) {
+    await deleteObject(ref(storage, input.bannerPath)).catch(() => {})
+  }
+}
+
 async function uploadModuleVideo(courseId: string, moduleId: string, file: File) {
   const extension = file.name.split(".").pop() || "mp4"
   const path = `courses/${courseId}/modules/${moduleId}_${Date.now()}.${extension}`
@@ -116,11 +161,15 @@ export async function updateCourseModule(input: {
   notes: string
   videoFile?: File | null
   previousVideoPath?: string | null
+  order?: number
 }) {
   const updates: CourseModuleData = {
     title: input.title,
     notes: input.notes,
     updatedAt: serverTimestamp(),
+  }
+  if (typeof input.order === "number") {
+    updates.order = input.order
   }
 
   if (input.videoFile) {
@@ -138,6 +187,18 @@ export async function updateCourseModule(input: {
   }
 }
 
+export async function updateCourseModuleOrder(input: {
+  courseId: string
+  moduleId: string
+  order: number
+}) {
+  await setDoc(
+    doc(db, "courses", input.courseId, "modules", input.moduleId),
+    { order: input.order, updatedAt: serverTimestamp() },
+    { merge: true }
+  )
+}
+
 export async function deleteCourseModule(input: {
   courseId: string
   moduleId: string
@@ -150,6 +211,10 @@ export async function deleteCourseModule(input: {
 }
 
 export async function deleteCourse(courseId: string) {
+  const courseSnap = await getDoc(doc(db, "courses", courseId))
+  const courseData = courseSnap.exists()
+    ? (courseSnap.data() as CourseData)
+    : null
   const modulesSnap = await getDocs(collection(db, "courses", courseId, "modules"))
   await Promise.allSettled(
     modulesSnap.docs.map(async (docSnap) => {
@@ -160,5 +225,8 @@ export async function deleteCourse(courseId: string) {
       }
     })
   )
+  if (courseData?.bannerPath) {
+    await deleteObject(ref(storage, courseData.bannerPath)).catch(() => {})
+  }
   await deleteDoc(doc(db, "courses", courseId))
 }
