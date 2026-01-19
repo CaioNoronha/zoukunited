@@ -13,7 +13,17 @@ import {
   type Course,
   type CourseModule,
 } from "@/services/courses"
-import { Loader2, Pencil, Plus, Trash2 } from "lucide-react"
+import {
+  ArrowRight,
+  Check,
+  Circle,
+  CircleDot,
+  Loader2,
+  Pencil,
+  Plus,
+  Search,
+  Trash2,
+} from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -51,6 +61,9 @@ export default function AdminCoursesPage() {
   const [courseForm, setCourseForm] = React.useState<CourseForm>(initialCourseForm)
   const [courseModuleDrafts, setCourseModuleDrafts] = React.useState<ModuleDraft[]>([])
   const [creatingCourse, setCreatingCourse] = React.useState(false)
+  const [titleTouched, setTitleTouched] = React.useState(false)
+  const [advancingStep, setAdvancingStep] = React.useState(false)
+  const [searchQuery, setSearchQuery] = React.useState("")
 
   const [editingCourseId, setEditingCourseId] = React.useState<string | null>(null)
   const [courseDrafts, setCourseDrafts] = React.useState<
@@ -89,6 +102,8 @@ export default function AdminCoursesPage() {
     setCourseForm(initialCourseForm)
     setCourseModuleDrafts([])
     setCourseStep(1)
+    setTitleTouched(false)
+    setAdvancingStep(false)
   }
 
   const handleDialogOpenChange = (open: boolean) => {
@@ -122,8 +137,12 @@ export default function AdminCoursesPage() {
   }
 
   const handleNextStep = () => {
-    if (!courseForm.title.trim()) return
+    const isValid = Boolean(courseForm.title.trim())
+    setTitleTouched(true)
+    if (!isValid) return
+    setAdvancingStep(true)
     setCourseStep(2)
+    window.setTimeout(() => setAdvancingStep(false), 250)
   }
 
   const handleAddCourseModuleDraft = () => {
@@ -309,6 +328,18 @@ export default function AdminCoursesPage() {
     }
   }
 
+  const titleError = titleTouched && !courseForm.title.trim()
+  const descriptionLimit = 300
+  const descriptionCount = courseForm.description.length
+  const visibleCourses = courses.filter((course) => {
+    const query = searchQuery.trim().toLowerCase()
+    if (!query) return true
+    return (
+      course.title.toLowerCase().includes(query) ||
+      (course.description || "").toLowerCase().includes(query)
+    )
+  })
+
   return (
     <div className="w-full px-8 pb-16 pt-10 text-white">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -328,9 +359,9 @@ export default function AdminCoursesPage() {
       </div>
 
       <Dialog open={courseDialogOpen} onOpenChange={handleDialogOpenChange}>
-        <DialogContent className="max-w-2xl border border-white/10 bg-[#0b0b0b] text-white">
-          <DialogHeader>
-            <DialogTitle className="text-xl">Criar curso</DialogTitle>
+        <DialogContent className="max-w-2xl rounded-2xl border border-white/10 bg-[#0b0b0b] text-white shadow-[0_30px_80px_rgba(0,0,0,0.65)]">
+          <DialogHeader className="text-left">
+            <DialogTitle className="text-2xl">Criar curso</DialogTitle>
             <DialogDescription className="text-white/60">
               {courseStep === 1
                 ? "Preencha as informações principais do curso."
@@ -338,63 +369,113 @@ export default function AdminCoursesPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="mt-2 flex items-center gap-3 text-sm">
-            <div
-              className={`flex items-center gap-2 rounded-full px-3 py-1 ${
-                courseStep === 1 ? "bg-[#f29b0f] text-black" : "bg-white/10"
-              }`}
-            >
-              <span className="text-xs font-semibold">1</span>
-              <span>Curso</span>
+          <div className="mt-4 space-y-3">
+            <div className="flex items-center justify-center text-sm">
+              <div className="flex items-center gap-3">
+                <span
+                  className={`flex items-center gap-2 rounded-full px-3 py-1 ${
+                    courseStep === 1
+                      ? "bg-[#f29b0f] text-black"
+                      : "bg-white/10 text-white/70"
+                  }`}
+                >
+                  {courseStep === 1 ? (
+                    <CircleDot className="size-4" />
+                  ) : (
+                    <Check className="size-4" />
+                  )}
+                  <span className="font-semibold">Curso</span>
+                </span>
+                <span className="text-white/40">→</span>
+                <span
+                  className={`flex items-center gap-2 rounded-full px-3 py-1 ${
+                    courseStep === 2
+                      ? "bg-[#f29b0f] text-black"
+                      : "bg-white/10 text-white/70"
+                    }`}
+                >
+                  {courseStep === 2 ? (
+                    <CircleDot className="size-4" />
+                  ) : (
+                    <Circle className="size-4" />
+                  )}
+                  <span className="font-semibold">Módulos</span>
+                </span>
+              </div>
             </div>
-            <div className="h-px w-10 bg-white/10" />
-            <div
-              className={`flex items-center gap-2 rounded-full px-3 py-1 ${
-                courseStep === 2 ? "bg-[#f29b0f] text-black" : "bg-white/10"
-              }`}
-            >
-              <span className="text-xs font-semibold">2</span>
-              <span>Módulos</span>
+            <div className="h-1 w-full rounded-full bg-white/10">
+              <div
+                className="h-full rounded-full bg-[#f29b0f] transition-all"
+                style={{ width: courseStep === 1 ? "50%" : "100%" }}
+              />
             </div>
           </div>
 
           {courseStep === 1 ? (
-            <div className="mt-6 space-y-4">
+            <div className="mt-6 space-y-5">
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-white/70">Título</label>
+                <label className="text-sm font-semibold text-white/80">Título</label>
                 <input
                   value={courseForm.title}
                   onChange={(event) =>
                     setCourseForm((prev) => ({ ...prev, title: event.target.value }))
                   }
-                  className="h-11 w-full rounded-md border border-white/10 bg-black/60 px-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/20"
-                  placeholder="Ex: Musicalidade"
+                  onBlur={() => setTitleTouched(true)}
+                  className="h-12 w-full rounded-md border border-white/15 bg-black/60 px-3 text-base text-white outline-none transition focus:border-[#f29b0f]/80 focus:ring-2 focus:ring-[#f29b0f]/30"
+                  placeholder="Ex.: Musicalidade no Zouk"
+                  aria-invalid={titleError}
                 />
+                <p className="text-xs text-white/50">
+                  Exemplos: “Musicalidade para Social”, “Base & Conexão”, “Zouk do Zero”.
+                </p>
+                {titleError && (
+                  <p className="text-xs text-[#ffb357]">Título é obrigatório.</p>
+                )}
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-white/70">Descrição</label>
+                <label className="text-sm font-semibold text-white/80">Descrição</label>
                 <textarea
                   value={courseForm.description}
                   onChange={(event) =>
-                    setCourseForm((prev) => ({ ...prev, description: event.target.value }))
+                    setCourseForm((prev) => ({
+                      ...prev,
+                      description: event.target.value.slice(0, descriptionLimit),
+                    }))
                   }
-                  className="min-h-[120px] w-full rounded-md border border-white/10 bg-black/60 px-3 py-2 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/20"
-                  placeholder="Uma breve visão do curso"
+                  className="min-h-[140px] w-full rounded-md border border-white/15 bg-black/60 px-3 py-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/80 focus:ring-2 focus:ring-[#f29b0f]/30"
+                  placeholder="Explique o que o aluno vai aprender e para quem é o curso."
                 />
+                <div className="flex items-center justify-between text-xs text-white/50">
+                  <span>2–3 frases são suficientes. Inclua nível e objetivo do curso.</span>
+                  <span>
+                    {descriptionCount}/{descriptionLimit}
+                  </span>
+                </div>
               </div>
-              <div className="flex justify-end gap-2">
+              <div className="flex flex-col gap-3">
+                <div className="flex justify-end gap-2">
                 <button
                   onClick={() => setCourseDialogOpen(false)}
-                  className="rounded-md border border-white/20 px-4 py-2 text-sm text-white/80 hover:border-[#f29b0f] hover:text-white"
+                  className="rounded-md border border-white/15 px-4 py-2 text-sm text-white/60 transition hover:border-white/40 hover:text-white"
                 >
                   Cancelar
                 </button>
                 <button
                   onClick={handleNextStep}
-                  className="rounded-md bg-[#f29b0f] px-4 py-2 text-sm font-semibold text-black transition hover:bg-[#ffb357]"
+                  disabled={!courseForm.title.trim() || advancingStep}
+                  className="inline-flex items-center gap-2 rounded-md bg-[#f29b0f] px-4 py-2 text-sm font-semibold text-black transition hover:bg-[#ffb357] hover:shadow-[0_0_18px_rgba(242,155,15,0.35)] disabled:cursor-not-allowed disabled:opacity-60"
                 >
+                  {advancingStep ? (
+                    <Loader2 className="size-4 animate-spin" />
+                  ) : (
+                    <ArrowRight className="size-4" />
+                  )}
                   Próximo
                 </button>
+                </div>
+                <p className="text-xs text-white/50">
+                  Próximo: você irá criar os módulos e adicionar vídeos.
+                </p>
               </div>
             </div>
           ) : (
@@ -487,25 +568,36 @@ export default function AdminCoursesPage() {
         </DialogContent>
       </Dialog>
 
-      <div className="mt-8">
+      <div className="mt-8 space-y-4">
+        <div className="relative w-full max-w-md">
+          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-white/40" />
+          <input
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Buscar cursos..."
+            className="h-11 w-full rounded-md border border-white/10 bg-black/50 pl-10 pr-3 text-sm text-white outline-none transition focus:border-[#f29b0f]/70 focus:ring-2 focus:ring-[#f29b0f]/20"
+          />
+        </div>
         {loading ? (
           <div className="flex items-center gap-2 text-white/70">
             <Loader2 className="size-4 animate-spin" />
             Carregando cursos...
           </div>
-        ) : courses.length === 0 ? (
+        ) : visibleCourses.length === 0 ? (
           <div className="rounded-xl border border-white/10 bg-black/30 p-6 text-white/70">
-            Nenhum curso cadastrado ainda.
+            Nenhum curso encontrado.
           </div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2">
-            {courses.map((course) => {
+            {visibleCourses.map((course) => {
               const isEditing = editingCourseId === course.id
               const draft = courseDrafts[course.id] || {
                 title: course.title,
                 description: course.description || "",
               }
               const modules = modulesByCourse[course.id] || []
+              const moduleCount = modules.length
+              const videoCount = modules.filter((module) => module.videoUrl).length
               const moduleDraft = newModuleDrafts[course.id] || {
                 title: "",
                 notes: "",
@@ -515,7 +607,7 @@ export default function AdminCoursesPage() {
               return (
                 <div
                   key={course.id}
-                  className="rounded-2xl border border-white/10 bg-black/40 p-6"
+                  className="rounded-2xl border border-white/10 bg-black/40 p-6 transition hover:border-white/20"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div className="space-y-2">
@@ -544,10 +636,18 @@ export default function AdminCoursesPage() {
                         </>
                       ) : (
                         <>
+                          <div className="flex items-center gap-2">
+                            <span className="rounded-full border border-white/15 px-2 py-0.5 text-xs text-white/60">
+                              Rascunho
+                            </span>
+                          </div>
                           <h3 className="text-xl font-semibold">{course.title}</h3>
                           {course.description && (
                             <p className="text-sm text-white/60">{course.description}</p>
                           )}
+                          <p className="text-xs text-white/50">
+                            {moduleCount} módulos • {videoCount} vídeos
+                          </p>
                         </>
                       )}
                     </div>
