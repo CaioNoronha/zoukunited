@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, type PointerEvent, type MouseEvent } from "react";
-import TicketCard from "../../../../components/common/ticket-card";
 import { motion, type Variants } from "framer-motion";
 import {
   Carousel,
@@ -10,6 +9,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import TicketCard from "@/components/common/ticket-card";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const easeOut: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
@@ -37,48 +38,46 @@ const lineVariants: Variants = {
   },
 };
 
-const tickets = [
-  {
-    price: "$275.00",
-    title: "Full Pass - Followers",
-    availability: "Available until 2026/08/12 23:59",
-    description:
-      "Full access to classes and parties for followers, with a weekend packed with dancing and learning."
-  },
-  {
-    price: "$275.00",
-    title: "Full Pass - Leaders",
-    availability: "Available until 2026/02/07 23:59",
-    description:
-      "Full access to classes and parties for leaders, with a weekend packed with dancing and learning."
-  },
-  {
-    price: "$520.00",
-    title: "Buddy Pass - Leader + Follower or 2 Leaders Ticket",
-    availability: "Available until 2026/02/04 23:59",
-    description: "Buddy Pass - Leader + Follower or 2 Leaders Ticket",
-  },
-  {
-    price: "$30.00",
-    title: "BZDC Jack & Jill",
-    availability: "Available until 2026/02/06 23:59",
-    description: "Official BZDC Jack & Jill - All Levels. In order to participate you must have FULL PASS.",
-  },
-  {
-    price: "$30.00",
-    title: "Pre-Party Pass",
-    availability: "Available until 2026/01/31 23:59",
-    description: "Pre-Party Pass for TWO workshops and party on Thursday (Feb 5th)",
-  },
-];
-
 export default function TicketsSection() {
+  const { t } = useTranslation();
   const dragStateRef = useRef({
     startX: 0,
     startY: 0,
     moved: false,
     lastDragAt: 0,
   });
+  const tickets = [
+    {
+      price: t.event.tickets.items.followers.price,
+      title: t.event.tickets.items.followers.title,
+      availability: t.event.tickets.items.followers.availability,
+      description: t.event.tickets.items.followers.description,
+    },
+    {
+      price: t.event.tickets.items.leaders.price,
+      title: t.event.tickets.items.leaders.title,
+      availability: t.event.tickets.items.leaders.availability,
+      description: t.event.tickets.items.leaders.description,
+    },
+    {
+      price: t.event.tickets.items.buddy.price,
+      title: t.event.tickets.items.buddy.title,
+      availability: t.event.tickets.items.buddy.availability,
+      description: t.event.tickets.items.buddy.description,
+    },
+    {
+      price: t.event.tickets.items.jackJill.price,
+      title: t.event.tickets.items.jackJill.title,
+      availability: t.event.tickets.items.jackJill.availability,
+      description: t.event.tickets.items.jackJill.description,
+    },
+    {
+      price: t.event.tickets.items.preParty.price,
+      title: t.event.tickets.items.preParty.title,
+      availability: t.event.tickets.items.preParty.availability,
+      description: t.event.tickets.items.preParty.description,
+    },
+  ];
 
   const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
     dragStateRef.current.startX = event.clientX;
@@ -120,7 +119,7 @@ export default function TicketsSection() {
       >
         <motion.div className="space-y-2" variants={itemVariants}>
           <p className="relative w-fit text-[20px] font-semibold uppercase leading-7 tracking-[-0.005em] text-[#FAFAFA]">
-            Tickets
+            {t.event.tickets.title}
             <motion.span
               aria-hidden="true"
               className="absolute -bottom-1 left-0 h-[2px] w-10 origin-left bg-[#F39200]"

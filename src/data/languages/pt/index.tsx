@@ -1,10 +1,18 @@
 import navbar from './navbar';
 import home from './home';
 import footer from './footer';
+import event from './event';
+import sigin from './signin';
+import login from './login';
+import sidebar from './sidebar';
 
-//English
+//Portuguese
 export const pt = {
   navbar,
   home,
   footer,
+  event,
+  login,
+  sigin,
+  sidebar
 } as const;

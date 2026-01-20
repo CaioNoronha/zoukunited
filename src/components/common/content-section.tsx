@@ -61,10 +61,10 @@ export default function ContentSection({
           transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
           className={`min-w-[300px] max-w-xl space-y-6 ${alignTextBottom ? "self-end" : ""}`}
         >
-          <h2 className="text-5xl sm:text-6xl font-extrabold text-black">
+          <h2 className="text-5xl sm:text-6xl font-extrabold text-[var(--ds-neutral-1)]">
             {title}
           </h2>
-          <p className="text-lg text-gray-600">{description}</p>
+          <p className="text-lg text-[var(--ds-neutral-2)]">{description}</p>
 
           {buttonLabel && (
             buttonHref ? (
@@ -104,7 +104,7 @@ export default function ContentSection({
             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
             className="relative w-full max-w-[400px] sm:max-w-[500px] aspect-square mx-auto lg:mx-0 lg:ml-auto mt-8 lg:mt-0"
           >
-            <div className="absolute top-0 left-0 w-[60%] h-[65%] rounded-xl overflow-hidden border border-neutral-700 bg-neutral-300">
+            <div className="absolute top-0 left-0 w-[60%] h-[65%] rounded-xl overflow-hidden border border-[var(--ds-neutral-4)] bg-[var(--ds-neutral-4)]">
               <Image
                 src={images[0]}
                 alt="Image 1"
@@ -113,7 +113,7 @@ export default function ContentSection({
               />
             </div>
 
-            <div className="absolute bottom-0 right-0 w-[60%] h-[65%] rounded-xl overflow-hidden border border-neutral-700 bg-neutral-300">
+            <div className="absolute bottom-0 right-0 w-[60%] h-[65%] rounded-xl overflow-hidden border border-[var(--ds-neutral-4)] bg-[var(--ds-neutral-4)]">
               <Image
                 src={images[1]}
                 alt="Image 2"

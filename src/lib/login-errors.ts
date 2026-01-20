@@ -16,6 +16,9 @@ const firebaseErrorMessages: Record<LoginErrorCode, string> = {
   "auth/popup-blocked": "Popup was blocked. Please allow popups and try again",
   "auth/account-exists-with-different-credential": "This email is linked to a different provider. Try another login method",
   "auth/credential-already-in-use": "This credential is already associated with another account",
+  "auth/email-already-in-use": "This email is already associated with another account",
+  "auth/weak-password": "Password should be at least 6 characters",
+  "auth/invalid-password": "Password should be at least 6 characters",
 }
 
 const fallbackError =

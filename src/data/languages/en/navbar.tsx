@@ -1,8 +1,10 @@
 const navbar = {
-    events: "Events",
-    competitions: "Competitions",
-    rules: "Rules",
-    educational: "Educational"
+    aboutus: "About us",
+    festivals: "Festivals",
+    classes: "Classes",
+    login: "Log in",
+    signup: "Sign Up",
+    logout: "Sign out"
 }
 
 export default navbar;

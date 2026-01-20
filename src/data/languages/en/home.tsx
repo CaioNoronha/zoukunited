@@ -1,9 +1,9 @@
 const home = {
     intro: {
-        title: "Title",
+        title: "Feel the Flow of Brazilian Zouk",
         description:
-            "Description",
-        button: "Button",
+            "From your first basic step to confident social dancing, we guide you through the music, connection, and technique that make Zouk unforgettable.",
+        button: "Start dancing today",
     },
     about: {
         title: "Title",
