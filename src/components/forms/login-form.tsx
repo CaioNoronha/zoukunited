@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { useAuth } from "@/hooks/useAuth";
 import { signInWithEmail, signInWithGoogle } from "@/services/auth";
-import { ensureUserProfile } from "@/services/user-profile";
+import { ensureUserProfile, fetchUserProfile } from "@/services/user-profile";
 import { useTranslation } from "@/hooks/useTranslation";
 import {
   getFirebaseLoginMessage,
@@ -32,10 +32,25 @@ export function LoginForm() {
       ? getFirebaseLoginMessage(message)
       : message;
 
+  const resolvePostLoginRoute = async (uid?: string | null) => {
+    if (redirect) return redirect;
+    if (!uid) return "/home";
+    const profile = await fetchUserProfile(uid).catch(() => null);
+    return profile?.isAdmin ? "/admin" : "/home";
+  };
+
   useEffect(() => {
-    if (user) {
-      router.replace(redirect ?? "/home");
-    }
+    if (!user) return;
+    let cancelled = false;
+    (async () => {
+      const target = await resolvePostLoginRoute(user.uid);
+      if (!cancelled) {
+        router.replace(target);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [redirect, router, user]);
 
   const handleEmailLogin = async (event: FormEvent<HTMLFormElement>) => {
@@ -58,7 +73,7 @@ export function LoginForm() {
 
     setHasValidationError(false);
     setLoading(true);
-    const { error: signInError } = await signInWithEmail(
+    const { error: signInError, user: signedInUser } = await signInWithEmail(
       trimmedEmail,
       password
     );
@@ -70,7 +85,8 @@ export function LoginForm() {
       return;
     }
 
-    router.replace(redirect ?? "/home");
+    const target = await resolvePostLoginRoute(signedInUser?.uid);
+    router.replace(target);
   };
 
   const handleGoogleLogin = async () => {
@@ -93,7 +109,8 @@ export function LoginForm() {
       }
     }
 
-    router.replace(redirect ?? "/home");
+    const target = await resolvePostLoginRoute(signedInUser?.uid);
+    router.replace(target);
   };
 
   return (

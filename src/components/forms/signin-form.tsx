@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { useAuth } from "@/hooks/useAuth";
 import { signUpWithEmail } from "@/services/auth";
-import { saveUserProfile } from "@/services/user-profile";
+import { fetchUserProfile, saveUserProfile } from "@/services/user-profile";
 import { getFirebaseLoginMessage } from "@/lib/login-errors";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -90,10 +90,25 @@ export function SignInForm() {
       ? getFirebaseLoginMessage(message)
       : message;
 
+  const resolvePostLoginRoute = async (uid?: string | null) => {
+    if (redirect) return redirect;
+    if (!uid) return "/home";
+    const profile = await fetchUserProfile(uid).catch(() => null);
+    return profile?.isAdmin ? "/admin" : "/home";
+  };
+
   useEffect(() => {
-    if (user) {
-      router.replace(redirect ?? "/home");
-    }
+    if (!user) return;
+    let cancelled = false;
+    (async () => {
+      const target = await resolvePostLoginRoute(user.uid);
+      if (!cancelled) {
+        router.replace(target);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [redirect, router, user]);
 
   const selectedCountry = countryOptions.find(
@@ -137,7 +152,10 @@ export function SignInForm() {
 
     setHasValidationError(false);
     setLoading(true);
-    const { error: signUpError } = await signUpWithEmail(email.trim(), password);
+    const { error: signUpError, user: signedUpUser } = await signUpWithEmail(
+      email.trim(),
+      password
+    );
 
     if (signUpError) {
       setLoading(false);
@@ -167,7 +185,8 @@ export function SignInForm() {
     }
 
     setLoading(false);
-    router.replace(redirect ?? "/home");
+    const target = await resolvePostLoginRoute(signedUpUser?.uid);
+    router.replace(target);
   };
 
   return (
