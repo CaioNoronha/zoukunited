@@ -4,14 +4,14 @@ const tickets = {
   items: {
     followers: {
       title: "Full Pass - Followers",
-      price: "$275.00",
+      price: "$285.00",
       availability: "Available until 2026/08/12 23:59",
       description:
         "Full access to classes and parties for followers, with a weekend packed with dancing and learning.",
     },
     leaders: {
       title: "Full Pass - Leaders",
-      price: "$275.00",
+      price: "$285.00",
       availability: "Available until 2026/02/07 23:59",
       description:
         "Full access to classes and parties for leaders, with a weekend packed with dancing and learning.",
