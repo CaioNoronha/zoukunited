@@ -65,6 +65,10 @@ export default function NavBar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <div className="fixed top-0 left-0 w-full z-50 bg-neutral-950/90 backdrop-blur-md">
       {/* Navbar */}

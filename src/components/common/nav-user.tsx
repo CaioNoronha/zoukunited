@@ -110,17 +110,17 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem
                 onSelect={handleAccount}
-                className="text-white hover:text-white focus:text-white hover:bg-[var(--ds-primary-1)]/15 focus:bg-[var(--ds-primary-1)]/20 [&_svg]:text-[var(--ds-primary-1)]"
+                className="text-white hover:text-white focus:text-white hover:bg-[#f29b0f]/15 focus:bg-[#f29b0f]/20 [&_svg]:text-[#f29b0f]"
               >
-                <UserRound className="text-[var(--ds-primary-1)]" />
+                <UserRound className="text-[#f29b0f]" />
                 Conta
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-white hover:text-white focus:text-white hover:bg-[var(--ds-primary-1)]/15 focus:bg-[var(--ds-primary-1)]/20 [&_svg]:text-[var(--ds-primary-1)]">
-                <CreditCard className="text-[var(--ds-primary-1)]" />
+              <DropdownMenuItem className="text-white hover:text-white focus:text-white hover:bg-[#f29b0f]/15 focus:bg-[#f29b0f]/20 [&_svg]:text-[#f29b0f]">
+                <CreditCard className="text-[#f29b0f]" />
                 Pagamento
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-white hover:text-white focus:text-white hover:bg-[var(--ds-primary-1)]/15 focus:bg-[var(--ds-primary-1)]/20 [&_svg]:text-[var(--ds-primary-1)]">
-                <Bell className="text-[var(--ds-primary-1)]" />
+              <DropdownMenuItem className="text-white hover:text-white focus:text-white hover:bg-[#f29b0f]/15 focus:bg-[#f29b0f]/20 [&_svg]:text-[#f29b0f]">
+                <Bell className="text-[#f29b0f]" />
                 Notificações
               </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -130,9 +130,9 @@ export function NavUser({
                 event.preventDefault()
                 void handleLogout()
               }}
-              className="text-white hover:text-white focus:text-white hover:bg-[var(--ds-primary-1)]/15 focus:bg-[var(--ds-primary-1)]/20 [&_svg]:text-[var(--ds-primary-1)]"
+              className="text-white hover:text-white focus:text-white hover:bg-[#f29b0f]/15 focus:bg-[#f29b0f]/20 [&_svg]:text-[#f29b0f]"
             >
-              <LogOut className="text-[var(--ds-primary-1)]" />
+              <LogOut className="text-[#f29b0f]" />
               Sair
             </DropdownMenuItem>
           </DropdownMenuContent>
