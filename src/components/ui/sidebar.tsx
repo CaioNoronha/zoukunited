@@ -267,7 +267,7 @@ function SidebarTrigger({
       variant="ghost"
       size="icon"
       className={cn(
-        "size-7 bg-transparent hover:bg-[var(--ds-primary-1)]/15 active:bg-[var(--ds-primary-1)]/20 text-[var(--ds-primary-1)] hover:text-[var(--ds-primary-1)] focus-visible:ring-0 focus-visible:ring-offset-0 border border-transparent shadow-none",
+        "size-7 bg-transparent hover:bg-[#f29b0f]/15 active:bg-[#f29b0f]/20 text-[#f29b0f] hover:text-[#ffb357] focus-visible:ring-0 focus-visible:ring-offset-0 border border-transparent shadow-none",
         className
       )}
       onClick={(event) => {
@@ -276,7 +276,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeftIcon className="text-[var(--ds-primary-1)]" />
+      <PanelLeftIcon className="text-[#f29b0f]" />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )
